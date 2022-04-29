@@ -1,7 +1,7 @@
-2022-04-29 17:09:00,608 ERROR o.t.g.MainGenerator [main] Error in test generation:No test step available.
+2022-04-29 23:32:53,055 ERROR o.t.g.MainGenerator [main] Error in test generation:No test step available.
 java.lang.IllegalStateException: No test step available.
 	at osmo.tester.generator.MainGenerator.nextStep(MainGenerator.java:260) [osmotester-3.7.1.jar:?]
 	at osmo.tester.generator.MainGenerator.nextTest(MainGenerator.java:155) [osmotester-3.7.1.jar:?]
 	at osmo.tester.generator.MainGenerator.generate(MainGenerator.java:94) [osmotester-3.7.1.jar:?]
 	at osmo.tester.OSMOTester.generate(OSMOTester.java:90) [osmotester-3.7.1.jar:?]
-	at hrapp_models.LoginModel.main(LoginModel.java:114) [classes/:?]
+	at hrapp_models.AddProjectModel.main(AddProjectModel.java:263) [classes/:?]

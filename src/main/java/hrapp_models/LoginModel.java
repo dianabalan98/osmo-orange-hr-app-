@@ -1,5 +1,4 @@
 package hrapp_models;
-import org.apache.commons.lang.ArrayUtils;
 import osmo.tester.OSMOConfiguration;
 import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
@@ -17,8 +16,6 @@ public class LoginModel {
     @Variable
     public boolean isUserLoggedIn = false;
     public boolean initialActionTested = false;
-    public boolean reachedLoginPage = false;
-    public boolean reachedDashboardPage = false;
 
     // state guard variables
     public String stateLoginPage = "Login Page";
@@ -35,9 +32,6 @@ public class LoginModel {
      * create a String array of all the tested actions and add them to it only once
      * final number of actions in array will be used as endcondition
      */
-    public final ArrayList<String> expectedCoveredSteps =
-            new ArrayList<String>(Arrays.asList("load_login_page", "login_disabled_user", "login_empty_password",
-                    "login_empty_username", "login_enabled_standard_user", "login_invalid_credentials", "logout"));
     public ArrayList<String> coveredSteps = new ArrayList<String>();
 
     // other variables
@@ -53,8 +47,6 @@ public class LoginModel {
     public void start() {
         isUserLoggedIn = false;
         initialActionTested = false;
-        reachedLoginPage = false;
-        reachedDashboardPage = false;
         startTime = System.currentTimeMillis();
         endTime = -1;
         timeElapsed = -1;
@@ -79,7 +71,7 @@ public class LoginModel {
 
     @Guard({"login_empty_username", "login_empty_password", "login_invalid_credentials", "login_disabled_user", "login_enabled_standard_user" })
     public boolean preventActionsUntilLoginPageIsLoaded(){
-        return reachedLoginPage;
+        return currentState.equals(stateLoginPage);
     }
 
     @Guard("load_login_page")
@@ -89,7 +81,7 @@ public class LoginModel {
 
     @Guard("logout")
     public boolean allowLogout() {
-        return isUserLoggedIn && reachedDashboardPage;
+        return isUserLoggedIn && currentState.equals(stateDashboardPage);
     }
 
     @TestStep("load_login_page")
@@ -97,7 +89,6 @@ public class LoginModel {
         scripter.step("Load login page.");
         currentState = stateLoginPage;
         initialActionTested = true;
-        reachedLoginPage = true;
         utils.checkList(coveredSteps, "load_login_page");
     }
 
@@ -130,8 +121,6 @@ public class LoginModel {
         scripter.step("Login with enabled standard user.");
         isUserLoggedIn = true;
         currentState = stateDashboardPage;
-        reachedLoginPage = false;
-        reachedDashboardPage = true;
         utils.checkList(coveredSteps, "login_enabled_standard_user");
     }
 
@@ -140,8 +129,6 @@ public class LoginModel {
         scripter.step("Logout.");
         isUserLoggedIn = false;
         currentState = stateLoginPage;
-        reachedDashboardPage = false;
-        reachedLoginPage = true;
         utils.checkList(coveredSteps, "logout");
     }
 
@@ -154,7 +141,7 @@ public class LoginModel {
     public boolean end() {
         scripter.step("TOTAL covered steps: " +coveredSteps.size()+ " | ELEMENTS: " +coveredSteps.toString());
         Collections.sort(coveredSteps);
-        if(expectedCoveredSteps.equals(coveredSteps)) {
+        if(utils.getLoginExpectedSteps().equals(coveredSteps)) {
             endTime = System.currentTimeMillis();
             timeElapsed = endTime - startTime;
             scripter.step("TOTAL TIME FOR TEST: " + TimeUnit.MILLISECONDS.toSeconds(timeElapsed));
@@ -170,7 +157,7 @@ public class LoginModel {
         OSMOTester tester = new OSMOTester();
         tester.addModelObject(new LoginModel());
         tester.setAlgorithm(new RandomAlgorithm());
-        config.setSuiteEndCondition(new Length(1)); // number of tests -> will generate only one at once for time measurement
+        config.setSuiteEndCondition(new Length(1)); // number of tests ? apparently doesn't work like this
         tester.generate(System.currentTimeMillis()); //random seed
     }
 
