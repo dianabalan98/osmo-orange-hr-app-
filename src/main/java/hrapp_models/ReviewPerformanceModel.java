@@ -13,11 +13,13 @@ import java.util.concurrent.TimeUnit;
 public class ReviewPerformanceModel {
 
     @Variable
-    /*public boolean isReviewAddedInactive = false;
-    public boolean isReviewActivated = false;
-    public boolean isReviewInProgress = false;
-    public boolean isReviewApproved = false;
-    public boolean isCompleteReviewPopupOpened  = false;*/
+
+    public String reviewStateInitial = "Not added yet";
+    public String reviewStateInactive = "Inactive";
+    public String reviewStateActivated = "Active";
+    public String reviewStateInProgress = "InProgress";
+    public String reviewApproved = "Approved";
+    public String currentReviewState;
     public boolean initialActionTested = false;
 
     // state guard variables
@@ -64,6 +66,7 @@ public class ReviewPerformanceModel {
         timeElapsed = -1;
         coveredSteps.clear();
         currentState = stateDashboardPage;
+        currentReviewState = reviewStateInitial;
         int tests = suite.getAllTestCases().size();
         System.out.println("---------------------------------------------------");
         System.out.println("Starting test: "+tests);
@@ -78,45 +81,46 @@ public class ReviewPerformanceModel {
     // GUARDS
     @Guard("go_to_manage_review_page")
     public boolean allowGoToManageReviewPageFromDashboardOnce() {
-        return !initialActionTested;
+        return !initialActionTested && currentReviewState.equals(reviewStateInitial);
     }
 
     @Guard("go_to_add_review_page")
     public boolean guardManageReviewsPageActions() {
-        return currentState.equals(stateManageReviewsPage);
+        return currentState.equals(stateManageReviewsPage) && currentReviewState.equals(reviewStateInitial);
     }
 
     @Guard({"fill_valid_employee_name", "fill_nonexistent_employee_name", "fill_empty_employee_name"})
     public boolean guardAddReviewPageActions() {
-        return currentState.equals(stateAddReviewPage);
+        return currentState.equals(stateAddReviewPage) && currentReviewState.equals(reviewStateInitial);
     }
 
     @Guard({"go_back_to_manage_reviews_page"})
     public boolean guardGoBackToManageReviewsPageAction() {
-        return currentState.equals(stateAddReviewPage) || currentState.equals(stateFormStep2Enabled) ;
+        return (currentState.equals(stateAddReviewPage) || currentState.equals(stateFormStep2Enabled)) &&
+                currentReviewState.equals(reviewStateInitial);
     }
 
     @Guard({"fill_invalid_supervisor", "fill_empty_date_fields", "fill_end_date_less_than_start_date",
     "fill_due_date_less_than_start_date", "fill_duplicate_review_data", "fill_empty_supervisor",
     "save_with_valid_data"})
     public boolean guardFormStep2EnabledActions() {
-        return currentState.equals(stateFormStep2Enabled);
+        return currentState.equals(stateFormStep2Enabled) && currentReviewState.equals(reviewStateInitial);
     }
 
     @Guard("activate_with_valid_data")
     public boolean guardActivateWithValidDataAction() {
-        return currentState.equals(stateFormStep2Enabled) || currentState.equals(stateEditReviewPage);
+        return (currentState.equals(stateFormStep2Enabled) || currentState.equals(stateEditReviewPage));
     }
 
     @Guard("go_to_edit_review_page")
     public boolean guardInactiveReviewActions() {
-        return currentState.equals(stateInactiveReview);
+        return currentState.equals(stateInactiveReview) && currentReviewState.equals(reviewStateInactive);
     }
 
     @Guard({"go_back_to_inactive_review_state", "save_edited_review_with_valid_data", "edit_empty_date_fields",
             "edit_due_date_less_than_start_date", "edit_end_date_less_than_start_date", "edit_duplicate_review_data"})
     public boolean guardEditReviewPageActions() {
-        return currentState.equals(stateEditReviewPage);
+        return currentState.equals(stateEditReviewPage) && currentReviewState.equals(reviewStateInactive);
     }
 
     @Guard("evaluate_review")
@@ -129,14 +133,14 @@ public class ReviewPerformanceModel {
             "complete_with_empty_finalization_fields_from_evaluate_review_page", "complete_with_invalid_final_rating_from_evaluate_review_page",
             "complete_with_invalid_completed_date_from_evaluate_review_page"})
     public boolean guardEvaluateReviewPageActions() {
-        return currentState.equals(stateEvaluateReviewPage);
+        return currentState.equals(stateEvaluateReviewPage) && currentReviewState.equals(reviewStateActivated);
     }
 
     @Guard({"complete_review_with_valid_data_from_in_progress_review", "complete_with_invalid_completed_date_from_in_progress_review",
             "complete_with_invalid_final_rating_from_in_progress_review", "complete_with_invalid_rating_from_in_progress_review",
             "complete_with_empty_finalization_fields_from_in_progress_review"})
     public boolean guardInProgressReviewActions() {
-        return currentState.equals(stateReviewInProgress);
+        return currentState.equals(stateReviewInProgress) && currentReviewState.equals(reviewStateInProgress);
     }
 
     @Guard({"cancel_complete_review_popup_from_in_progress_review", "cancel_complete_review_popup_from_evaluate_review_page",
@@ -145,9 +149,19 @@ public class ReviewPerformanceModel {
         return currentState.equals(stateCompleteReviewPopupOpened);
     }
 
+    @Guard({"cancel_complete_review_popup_from_in_progress_review"})
+    public boolean guardCancelPopupFromInProgress() {
+        return currentReviewState.equals(reviewStateInProgress);
+    }
+
+    @Guard({"cancel_complete_review_popup_from_evaluate_review_page"})
+    public boolean guardCancelPopupFromEvaluateReviewPage() {
+        return currentReviewState.equals(reviewStateActivated);
+    }
+
     @Guard("return_to_manage_reviews_page")
     public boolean guardApprovedReviewActions() {
-        return currentState.equals(stateReviewApproved);
+        return currentState.equals(stateReviewApproved) && currentReviewState.equals(reviewApproved);
     }
 
     // TEST STEPS
@@ -249,6 +263,7 @@ public class ReviewPerformanceModel {
     public void saveWithValidData() {
         scripter.step("Save with valid data.");
         currentState = stateInactiveReview;
+        currentReviewState = reviewStateInactive;
         utils.checkList(coveredSteps, "save_with_valid_data");
     }
 
@@ -256,6 +271,7 @@ public class ReviewPerformanceModel {
     public void activateWithValidData() {
         scripter.step("Activate with valid data.");
         currentState = stateActivatedReview;
+        currentReviewState = reviewStateActivated;
         utils.checkList(coveredSteps, "activate_with_valid_data");
     }
 
@@ -349,6 +365,7 @@ public class ReviewPerformanceModel {
     public void saveWithValidDataFromEvaluateReviewPage() {
         scripter.step("Save with valid data from evaluate review page.");
         currentState = stateReviewInProgress;
+        currentReviewState = reviewStateInProgress;
         utils.checkList(coveredSteps, "save_with_valid_data_from_evaluate_review_page");
     }
 
@@ -440,6 +457,7 @@ public class ReviewPerformanceModel {
     public void confirmReviewCompletion() {
         scripter.step("Confirm review completion.");
         currentState = stateReviewApproved;
+        currentReviewState = reviewApproved;
         utils.checkList(coveredSteps, "confirm_review_completion");
     }
 
@@ -451,6 +469,7 @@ public class ReviewPerformanceModel {
     public void returnToManageReviewsPage() {
         scripter.step("Return to manage reviews page.");
         currentState = stateManageReviewsPage;
+        currentReviewState = reviewStateInitial;
         utils.checkList(coveredSteps, "return_to_manage_reviews_page");
     }
 
