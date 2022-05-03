@@ -4,11 +4,10 @@ import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
+import osmo.tester.generator.endcondition.LengthProbability;
+import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.generator.testsuite.TestSuite;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 public class ReviewPerformanceModel {
 
@@ -37,11 +36,6 @@ public class ReviewPerformanceModel {
 
     public String currentState = stateDashboardPage;
 
-    // time vars
-    public long startTime = -1;
-    public long endTime = -1;
-    public long timeElapsed = -1;
-
     // coverage variable
     /**
      * create a String array of all the tested actions and add them to it only once
@@ -61,9 +55,6 @@ public class ReviewPerformanceModel {
     @BeforeTest
     public void start() {
         initialActionTested = false;
-        startTime = System.currentTimeMillis();
-        endTime = -1;
-        timeElapsed = -1;
         coveredSteps.clear();
         currentState = stateDashboardPage;
         currentReviewState = reviewStateInitial;
@@ -478,27 +469,27 @@ public class ReviewPerformanceModel {
         scripter.step("CURRENT STATE: "+currentState+".");
     }
 
-    @EndCondition
-    public boolean end() {
-        scripter.step("TOTAL covered steps: " +coveredSteps.size()+ " | ELEMENTS: " +coveredSteps.toString());
-        Collections.sort(coveredSteps);
-        if(utils.getReviewPerformanceExpectedStepsExpectedSteps().equals(coveredSteps)) {
-            endTime = System.currentTimeMillis();
-            timeElapsed = endTime - startTime;
-            scripter.step("TOTAL TIME FOR TEST: " + TimeUnit.MILLISECONDS.toSeconds(timeElapsed));
-            return true;
-        }
-        return false;
-    }
-
-
-
     public static void main(String[] args) {
-        OSMOConfiguration config = new OSMOConfiguration();
+
         OSMOTester tester = new OSMOTester();
         tester.addModelObject(new ReviewPerformanceModel());
         tester.setAlgorithm(new RandomAlgorithm());
-        config.setSuiteEndCondition(new Length(10));
-        tester.generate(System.currentTimeMillis());
+        tester.setSuiteEndCondition(new Length(1));
+
+        /**
+         * Full step coverage
+         */
+        UtilsMethods utils = new UtilsMethods();
+        ArrayList<String> reviewPerformanceExpectedSteps = utils.getReviewPerformanceExpectedSteps();
+        StepCoverage steps = new StepCoverage();
+        for (String step : reviewPerformanceExpectedSteps) {
+            steps.addRequiredStep(step);
+        }
+        tester.setTestEndCondition(steps);
+
+
+        // test generation command
+        tester.generate(System.currentTimeMillis()); //random seed
+
     }
 }

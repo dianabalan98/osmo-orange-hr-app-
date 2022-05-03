@@ -1,15 +1,12 @@
 package hrapp_models;
-import osmo.tester.OSMOConfiguration;
 import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
+import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.generator.testsuite.TestSuite;
-
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
+
 
 public class LoginModel {
 
@@ -21,11 +18,6 @@ public class LoginModel {
     public String stateLoginPage = "Login Page";
     public String stateDashboardPage = "Dashboard Page";
     public String currentState = "Fake vertex";
-
-    // time vars
-    public long startTime = -1;
-    public long endTime = -1;
-    public long timeElapsed = -1;
 
     // coverage variable
     /**
@@ -47,9 +39,6 @@ public class LoginModel {
     public void start() {
         isUserLoggedIn = false;
         initialActionTested = false;
-        startTime = System.currentTimeMillis();
-        endTime = -1;
-        timeElapsed = -1;
         currentState = "Fake vertex";
         coveredSteps.clear();
         int tests = suite.getAllTestCases().size();
@@ -137,27 +126,26 @@ public class LoginModel {
         scripter.step("CURRENT STATE: "+currentState+".");
     }
 
-    @EndCondition
-    public boolean end() {
-        scripter.step("TOTAL covered steps: " +coveredSteps.size()+ " | ELEMENTS: " +coveredSteps.toString());
-        Collections.sort(coveredSteps);
-        if(utils.getLoginExpectedSteps().equals(coveredSteps)) {
-            endTime = System.currentTimeMillis();
-            timeElapsed = endTime - startTime;
-            scripter.step("TOTAL TIME FOR TEST: " + TimeUnit.MILLISECONDS.toSeconds(timeElapsed));
-            return true;
-        }
-        return false;
-    }
 
     public static void main(String[] args) {
-        OSMOConfiguration config = new OSMOConfiguration();
-        // full steps coverage -> maybe use requirements instead to mae sure each step is covered at least once
-        // or we can use end test annotation requirement to verify that each step has been tested 1 time
         OSMOTester tester = new OSMOTester();
         tester.addModelObject(new LoginModel());
         tester.setAlgorithm(new RandomAlgorithm());
-        config.setSuiteEndCondition(new Length(1)); // number of tests ? apparently doesn't work like this
+        tester.setSuiteEndCondition(new Length(1));
+
+        /**
+         * Full step coverage
+         */
+        UtilsMethods utils = new UtilsMethods();
+        ArrayList<String> loginExpectedSteps = utils.getLoginExpectedSteps();
+        StepCoverage steps = new StepCoverage();
+        for (String step : loginExpectedSteps) {
+            steps.addRequiredStep(step);
+        }
+        tester.setTestEndCondition(steps);
+
+
+        // test generation command
         tester.generate(System.currentTimeMillis()); //random seed
     }
 

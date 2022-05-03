@@ -4,11 +4,9 @@ import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
+import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.generator.testsuite.TestSuite;
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 public class AddProjectModel {
 
@@ -23,11 +21,6 @@ public class AddProjectModel {
     public String stateAddCustomerPopupOpened = "Customer pop-up opened";
     public String stateProjectAdded = "Project added";
     public String currentState = stateDashboardPage;
-
-    // time vars
-    public long startTime = -1;
-    public long endTime = -1;
-    public long timeElapsed = -1;
 
     // coverage variable
     /**
@@ -49,9 +42,6 @@ public class AddProjectModel {
     public void start() {
         isProjectAdded = false;
         initialActionTested = false;
-        startTime = System.currentTimeMillis();
-        endTime = -1;
-        timeElapsed = -1;
         coveredSteps.clear();
         currentState = stateDashboardPage;
         int tests = suite.getAllTestCases().size();
@@ -241,25 +231,26 @@ public class AddProjectModel {
         scripter.step("CURRENT STATE: "+currentState+".");
     }
 
-    @EndCondition
-    public boolean end() {
-        scripter.step("TOTAL covered steps: " +coveredSteps.size()+ " | ELEMENTS: " +coveredSteps.toString());
-        Collections.sort(coveredSteps);
-        if(utils.getAddProjectExpectedSteps().equals(coveredSteps)) {
-            endTime = System.currentTimeMillis();
-            timeElapsed = endTime - startTime;
-            scripter.step("TOTAL TIME FOR TEST: " + TimeUnit.MILLISECONDS.toSeconds(timeElapsed));
-            return true;
-        }
-        return false;
-    }
 
     public static void main(String[] args) {
-        OSMOConfiguration config = new OSMOConfiguration();
         OSMOTester tester = new OSMOTester();
         tester.addModelObject(new AddProjectModel());
         tester.setAlgorithm(new RandomAlgorithm());
-        config.setSuiteEndCondition(new Length(1));
-        tester.generate(System.currentTimeMillis());
+        tester.setSuiteEndCondition(new Length(1));
+
+        /**
+         * Full step coverage
+         */
+        UtilsMethods utils = new UtilsMethods();
+        ArrayList<String> addProjectExpectedSteps = utils.getAddProjectExpectedSteps();
+        StepCoverage steps = new StepCoverage();
+        for (String step : addProjectExpectedSteps) {
+            steps.addRequiredStep(step);
+        }
+        tester.setTestEndCondition(steps);
+
+
+        // test generation command
+        tester.generate(System.currentTimeMillis()); //random seed
     }
 }

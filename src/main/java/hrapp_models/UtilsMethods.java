@@ -33,7 +33,7 @@ public class UtilsMethods {
         return loginExpectedSteps;
     }
 
-    public ArrayList<String> getReviewPerformanceExpectedStepsExpectedSteps() {
+    public ArrayList<String> getReviewPerformanceExpectedSteps() {
         return reviewPerformanceExpectedSteps;
     }
 
