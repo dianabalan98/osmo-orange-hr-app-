@@ -1,20 +1,28 @@
 package hrapp_models;
 
+import osmo.tester.model.Requirements;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class UtilsMethods {
 
     // VARS
-    public ArrayList<String> addProjectExpectedSteps = new ArrayList<String>();
-    public ArrayList<String> loginExpectedSteps = new ArrayList<String>();
-    public ArrayList<String> reviewPerformanceExpectedSteps = new ArrayList<String>();
+    private ArrayList<String> loginExpectedSteps = new ArrayList<>();
+    private ArrayList<String> loginStates = new ArrayList<>();
+    private ArrayList<String> addProjectExpectedSteps = new ArrayList<>();
+    private ArrayList<String> addProjectStates = new ArrayList<>();
+    private ArrayList<String> reviewPerformanceExpectedSteps = new ArrayList<>();
+    private ArrayList<String> reviewPerformanceStates = new ArrayList<>();
 
     // CONSTRUCTOR
     public UtilsMethods() {
         initializeGetAddProjectExpectedSteps();
         initializeLoginExpectedSteps();
         initializeReviewPerformanceExpectedSteps();
+        initializeLoginStates();
+        initializeAddProjectStates();
+        initializeReviewPerformanceStates();
     }
 
     // METHODS
@@ -36,6 +44,14 @@ public class UtilsMethods {
     public ArrayList<String> getReviewPerformanceExpectedSteps() {
         return reviewPerformanceExpectedSteps;
     }
+
+    public ArrayList<String> getLoginStates() {
+        return loginStates;
+    }
+
+    public ArrayList<String> getAddProjectStates() { return addProjectStates; }
+
+    public ArrayList<String> getReviewPerformanceStates() { return reviewPerformanceStates; }
 
     private void initializeGetAddProjectExpectedSteps() {  // 17
         addProjectExpectedSteps.add("go_to_projects_page");
@@ -110,6 +126,19 @@ public class UtilsMethods {
         reviewPerformanceExpectedSteps.add("return_to_manage_reviews_page");
 
         Collections.sort(reviewPerformanceExpectedSteps);
+    }
+
+    public void initializeLoginStates() {
+        loginStates.add("Login page reached");
+        loginStates.add("Dashboard page reached");
+    }
+
+    public void initializeAddProjectStates() {
+
+    }
+
+    public void initializeReviewPerformanceStates() {
+
     }
 
 }

@@ -3,8 +3,13 @@ import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
+import osmo.tester.generator.endcondition.StateCoverage;
+import osmo.tester.generator.endcondition.structure.ElementCoverage;
+import osmo.tester.generator.endcondition.structure.ElementCoverageRequirement;
 import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.generator.testsuite.TestSuite;
+import osmo.tester.model.Requirements;
+
 import java.util.ArrayList;
 
 
@@ -13,6 +18,9 @@ public class LoginModel {
     @Variable
     public boolean isUserLoggedIn = false;
     public boolean initialActionTested = false;
+
+    // state variable = requirement
+    public Requirements loginRequirements = new Requirements();
 
     // state guard variables
     public String stateLoginPage = "Login Page";
@@ -33,6 +41,9 @@ public class LoginModel {
 
     public LoginModel() {
         scripter = new Scripter(System.out);
+        loginRequirements.add("Login page reached");
+        loginRequirements.add("Dashboard page reached");
+
     }
 
     @BeforeTest
@@ -78,31 +89,27 @@ public class LoginModel {
         scripter.step("Load login page.");
         currentState = stateLoginPage;
         initialActionTested = true;
-        utils.checkList(coveredSteps, "load_login_page");
+        loginRequirements.covered("Login page reached");
     }
 
     @TestStep("login_empty_username")
     public void loginEmptyUsername() {
         scripter.step("Login with empty username.");
-        utils.checkList(coveredSteps, "login_empty_username");
     }
 
     @TestStep("login_empty_password")
     public void loginEmptyPassword() {
         scripter.step("Login with empty password.");
-        utils.checkList(coveredSteps, "login_empty_password");
     }
 
     @TestStep("login_invalid_credentials")
     public void loginInvalidCredentials() {
         scripter.step("Login with invalid credentials.");
-        utils.checkList(coveredSteps, "login_invalid_credentials");
     }
 
     @TestStep("login_disabled_user")
     public void loginDisabledUser() {
         scripter.step("Login with disabled user.");
-        utils.checkList(coveredSteps, "login_disabled_user");
     }
 
     @TestStep("login_enabled_standard_user")
@@ -110,7 +117,7 @@ public class LoginModel {
         scripter.step("Login with enabled standard user.");
         isUserLoggedIn = true;
         currentState = stateDashboardPage;
-        utils.checkList(coveredSteps, "login_enabled_standard_user");
+        loginRequirements.covered("Dashboard page reached");
     }
 
     @TestStep("logout")
@@ -118,7 +125,6 @@ public class LoginModel {
         scripter.step("Logout.");
         isUserLoggedIn = false;
         currentState = stateLoginPage;
-        utils.checkList(coveredSteps, "logout");
     }
 
     @Post("all")
@@ -128,22 +134,48 @@ public class LoginModel {
 
 
     public static void main(String[] args) {
+
+        LoginModel loginModel = new LoginModel();
         OSMOTester tester = new OSMOTester();
-        tester.addModelObject(new LoginModel());
+        ElementCoverageRequirement req;
+
+        tester.addModelObject(loginModel);
         tester.setAlgorithm(new RandomAlgorithm());
         tester.setSuiteEndCondition(new Length(1));
 
         /**
          * Full step coverage
          */
-        UtilsMethods utils = new UtilsMethods();
+        /*UtilsMethods utils = new UtilsMethods();
         ArrayList<String> loginExpectedSteps = utils.getLoginExpectedSteps();
         StepCoverage steps = new StepCoverage();
         for (String step : loginExpectedSteps) {
             steps.addRequiredStep(step);
         }
-        tester.setTestEndCondition(steps);
+        tester.setTestEndCondition(steps);*/
 
+        /**
+         * Full state coverage (requirements)
+         */
+        /*req = new ElementCoverageRequirement(0, 0, loginModel.loginRequirements.getRequirements().size());
+        tester.setSuiteEndCondition(new ElementCoverage(req));*/
+
+        /**
+         * Full step + state coverage -> leave both coverage conditions. Full step coverage already covers
+         * all states though.
+         */
+
+        /**
+         * Random reached logout step
+         */
+        //tester.setTestEndCondition(new StepCoverage("logout"));
+
+
+        /**
+         * Random reached dashboard page state
+         */
+        //tester.setTestEndCondition(new StateCoverage("login_enabled_standard_user"));
+        tester.setTestEndCondition(new StateCoverage("test","login_enabled_standard_user"));
 
         // test generation command
         tester.generate(System.currentTimeMillis()); //random seed
