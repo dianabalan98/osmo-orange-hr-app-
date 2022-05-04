@@ -27,17 +27,9 @@ public class LoginModel {
     public String stateDashboardPage = "Dashboard Page";
     public String currentState = "Fake vertex";
 
-    // coverage variable
-    /**
-     * create a String array of all the tested actions and add them to it only once
-     * final number of actions in array will be used as endcondition
-     */
-    public ArrayList<String> coveredSteps = new ArrayList<String>();
-
     // other variables
     public TestSuite suite;
     public final Scripter scripter;
-    public final UtilsMethods utils = new UtilsMethods();
 
     public LoginModel() {
         scripter = new Scripter(System.out);
@@ -51,7 +43,6 @@ public class LoginModel {
         isUserLoggedIn = false;
         initialActionTested = false;
         currentState = "Fake vertex";
-        coveredSteps.clear();
         int tests = suite.getAllTestCases().size();
         System.out.println("---------------------------------------------------");
         System.out.println("Starting test: "+tests);
