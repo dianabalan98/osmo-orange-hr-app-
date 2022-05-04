@@ -157,8 +157,8 @@ public class LoginModel {
         /**
          * Full state coverage (requirements)
          */
-        /*req = new ElementCoverageRequirement(0, 0, loginModel.loginRequirements.getRequirements().size());
-        tester.setSuiteEndCondition(new ElementCoverage(req));*/
+        req = new ElementCoverageRequirement(0, 0, loginModel.loginRequirements.getRequirements().size());
+        tester.setSuiteEndCondition(new ElementCoverage(req));
 
         /**
          * Full step + state coverage -> leave both coverage conditions. Full step coverage already covers
@@ -172,10 +172,10 @@ public class LoginModel {
 
 
         /**
-         * Random reached dashboard page state
+         * TODO: Random reached dashboard page state -> still not functional
          */
         //tester.setTestEndCondition(new StateCoverage("login_enabled_standard_user"));
-        tester.setTestEndCondition(new StateCoverage("test","login_enabled_standard_user"));
+        //tester.setTestEndCondition(new StateCoverage("test","login_enabled_standard_user"));
 
         // test generation command
         tester.generate(System.currentTimeMillis()); //random seed
