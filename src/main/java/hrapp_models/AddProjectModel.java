@@ -56,7 +56,7 @@ public class AddProjectModel {
     @AfterSuite
     public void done() {
         int tests = suite.getAllTestCases().size();
-        System.out.println("Total tests generated: "+tests);
+        //System.out.println("Total tests generated: "+tests);
     }
 
     @Guard({"!return_to_projects_page"})
@@ -229,10 +229,10 @@ public class AddProjectModel {
     }
 
 
-    @Post("all")
+    /*@Post("all")
     public void checkState() {
         scripter.step("CURRENT STATE: "+currentState+".");
-    }
+    }*/
 
 
     public static void main(String[] args) {

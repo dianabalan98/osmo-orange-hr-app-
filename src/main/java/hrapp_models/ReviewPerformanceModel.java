@@ -76,7 +76,7 @@ public class ReviewPerformanceModel {
     @AfterSuite
     public void done() {
         int tests = suite.getAllTestCases().size();
-        System.out.println("Total tests generated: "+tests);
+        //System.out.println("Total tests generated: "+tests);
     }
 
     // GUARDS
@@ -489,10 +489,10 @@ public class ReviewPerformanceModel {
         reviewPerformanceRequirements.covered("Manage reviews page reached");
     }
 
-    @Post("all")
+    /*@Post("all")
     public void checkState() {
         scripter.step("CURRENT STATE: "+currentState+".");
-    }
+    }*/
 
     public static void main(String[] args) {
 

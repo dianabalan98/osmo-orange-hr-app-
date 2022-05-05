@@ -51,7 +51,6 @@ public class LoginModel {
     @AfterSuite
     public void done() {
         int tests = suite.getAllTestCases().size();
-        System.out.println("Total tests generated: "+tests);
     }
 
     @Guard({"load_login_page", "login_empty_username", "login_empty_password", "login_invalid_credentials",
@@ -118,10 +117,10 @@ public class LoginModel {
         currentState = stateLoginPage;
     }
 
-    @Post("all")
+    /*@Post("all")
     public void checkState() {
         scripter.step("CURRENT STATE: "+currentState+".");
-    }
+    }*/
 
 
     public static void main(String[] args) {
@@ -137,19 +136,19 @@ public class LoginModel {
         /**
          * Full step coverage
          */
-        /*UtilsMethods utils = new UtilsMethods();
+        UtilsMethods utils = new UtilsMethods();
         ArrayList<String> loginExpectedSteps = utils.getLoginExpectedSteps();
         StepCoverage steps = new StepCoverage();
         for (String step : loginExpectedSteps) {
             steps.addRequiredStep(step);
         }
-        tester.setTestEndCondition(steps);*/
+        tester.setTestEndCondition(steps);
 
         /**
          * Full state coverage (requirements)
          */
-        req = new ElementCoverageRequirement(0, 0, loginModel.loginRequirements.getRequirements().size());
-        tester.setSuiteEndCondition(new ElementCoverage(req));
+        /*req = new ElementCoverageRequirement(0, 0, loginModel.loginRequirements.getRequirements().size());
+        tester.setSuiteEndCondition(new ElementCoverage(req));*/
 
         /**
          * Full step + state coverage -> leave both coverage conditions. Full step coverage already covers
