@@ -88,7 +88,8 @@ public class UtilsMethods {
     private void initializeReviewPerformanceExpectedSteps() {  // 39-40
         reviewPerformanceExpectedSteps.add("go_to_manage_review_page");
         reviewPerformanceExpectedSteps.add("go_to_add_review_page");
-        reviewPerformanceExpectedSteps.add("go_back_to_manage_reviews_page");
+        reviewPerformanceExpectedSteps.add("go_back_to_manage_reviews_page_from_add_review_page");
+        reviewPerformanceExpectedSteps.add("go_back_to_manage_reviews_page_from_form_step_2");
         reviewPerformanceExpectedSteps.add("fill_valid_employee_name");
         reviewPerformanceExpectedSteps.add("fill_nonexistent_employee_name");
         reviewPerformanceExpectedSteps.add("fill_empty_employee_name");
@@ -99,7 +100,8 @@ public class UtilsMethods {
         reviewPerformanceExpectedSteps.add("fill_duplicate_review_data");
         reviewPerformanceExpectedSteps.add("fill_empty_supervisor");
         reviewPerformanceExpectedSteps.add("save_with_valid_data");
-        reviewPerformanceExpectedSteps.add("activate_with_valid_data");
+        reviewPerformanceExpectedSteps.add("activate_with_valid_data_from_form_step_2");
+        reviewPerformanceExpectedSteps.add("activate_with_valid_data_from_edit_review_page");
         reviewPerformanceExpectedSteps.add("go_to_edit_review_page");
         reviewPerformanceExpectedSteps.add("go_back_to_inactive_review_state");
         reviewPerformanceExpectedSteps.add("save_edited_review_with_valid_data");
