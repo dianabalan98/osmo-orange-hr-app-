@@ -1,0 +1,26 @@
+"C:\Program Files\Java\jdk-11.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.3.2\lib\idea_rt.jar=52842:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.3.2\bin" -Dfile.encoding=UTF-8 -classpath C:\osmo_disertatie\osmo_dissertation_hrapp\target\classes;C:\Users\XXX\.m2\repository\net\kanstren\osmo\osmotester\3.7.1\osmotester-3.7.1.jar;C:\Users\XXX\.m2\repository\org\apache\velocity\velocity\1.7\velocity-1.7.jar;C:\Users\XXX\.m2\repository\commons-collections\commons-collections\3.2.1\commons-collections-3.2.1.jar;C:\Users\XXX\.m2\repository\commons-lang\commons-lang\2.4\commons-lang-2.4.jar;C:\Users\XXX\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\XXX\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.2\log4j-api-2.11.2.jar;C:\Users\XXX\.m2\repository\org\apache\logging\log4j\log4j-core\2.11.2\log4j-core-2.11.2.jar hrapp_models.LoginModel
+---------------------------------------------------
+Starting test: 1
+STEP: Load login page.
+STEP: Login with disabled user.
+STEP: Login with empty username.
+STEP: Login with enabled standard user.
+STEP: Logout.
+Total miliseconds: 0
+generated 1 tests.
+
+Covered elements:
+Total steps: 5
+Unique steps: 5 (of 7) missing:[login_empty_password, login_invalid_credentials]
+Unique step-pairs: 5
+Unique requirements: 2
+Variable values: 2
+Unique coverage-values: 0
+Unique coverage-value-pairs: 0
+
+Requirements:[Dashboard page reached, Login page reached]
+Covered:[Dashboard page reached, Login page reached]
+Not covered:[]
+Total unique requirements = 2/2 (100%) requirements.
+
+Process finished with exit code 0

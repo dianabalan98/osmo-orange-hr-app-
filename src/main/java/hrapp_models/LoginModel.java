@@ -31,6 +31,9 @@ public class LoginModel {
     public TestSuite suite;
     public final Scripter scripter;
 
+    long start = System.currentTimeMillis();
+    long finish = System.currentTimeMillis();
+
     public LoginModel() {
         scripter = new Scripter(System.out);
         loginRequirements.add("Login page reached");
@@ -51,6 +54,8 @@ public class LoginModel {
     @AfterSuite
     public void done() {
         int tests = suite.getAllTestCases().size();
+        System.out.println("Total miliseconds: " + (finish - start));
+
     }
 
     @Guard({"load_login_page", "login_empty_username", "login_empty_password", "login_invalid_credentials",
@@ -136,13 +141,13 @@ public class LoginModel {
         /**
          * Full step coverage
          */
-        UtilsMethods utils = new UtilsMethods();
+        /*UtilsMethods utils = new UtilsMethods();
         ArrayList<String> loginExpectedSteps = utils.getLoginExpectedSteps();
         StepCoverage steps = new StepCoverage();
         for (String step : loginExpectedSteps) {
             steps.addRequiredStep(step);
         }
-        tester.setTestEndCondition(steps);
+        tester.setTestEndCondition(steps);*/
 
         /**
          * Full state coverage (requirements)
@@ -158,7 +163,7 @@ public class LoginModel {
         /**
          * Random reached logout step
          */
-        //tester.setTestEndCondition(new StepCoverage("logout"));
+        tester.setTestEndCondition(new StepCoverage("logout"));
 
 
         /**

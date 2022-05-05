@@ -1,0 +1,13 @@
+Starting test: 1
+STEP: Load login page.
+STEP: Login with empty username.
+STEP: Login with disabled user.
+STEP: Login with enabled standard user.
+STEP: Logout.
+STEP: Login with empty password.
+STEP: Login with invalid credentials.
+generated 1 tests.
+
+Covered elements:
+Total steps: 7
+Unique steps: 7 (of 7)

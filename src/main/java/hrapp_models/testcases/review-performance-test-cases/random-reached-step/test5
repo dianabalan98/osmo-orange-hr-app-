@@ -1,0 +1,40 @@
+"C:\Program Files\Java\jdk-11.0.2\bin\java.exe" "-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.3.2\lib\idea_rt.jar=58342:C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.3.2\bin" -Dfile.encoding=UTF-8 -classpath C:\osmo_disertatie\osmo_dissertation_hrapp\target\classes;C:\Users\XXX\.m2\repository\net\kanstren\osmo\osmotester\3.7.1\osmotester-3.7.1.jar;C:\Users\XXX\.m2\repository\org\apache\velocity\velocity\1.7\velocity-1.7.jar;C:\Users\XXX\.m2\repository\commons-collections\commons-collections\3.2.1\commons-collections-3.2.1.jar;C:\Users\XXX\.m2\repository\commons-lang\commons-lang\2.4\commons-lang-2.4.jar;C:\Users\XXX\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\XXX\.m2\repository\org\apache\logging\log4j\log4j-api\2.11.2\log4j-api-2.11.2.jar;C:\Users\XXX\.m2\repository\org\apache\logging\log4j\log4j-core\2.11.2\log4j-core-2.11.2.jar hrapp_models.ReviewPerformanceModel
+---------------------------------------------------
+Starting test: 1
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+STEP: Fill empty supervisor.
+STEP: Activate with valid data from edit review page.
+STEP: Evaluate review.
+STEP: Save with valid data from evaluate review page.
+STEP: Complete review with valid data from in progress review.
+STEP: Confirm review completion.
+STEP: Return to manage reviews page.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+STEP: Activate with valid data from form step 2.
+STEP: Evaluate review.
+STEP: Complete with invalid final rating from evaluate review page.
+STEP: Complete review with valid data from evaluate review page.
+STEP: Cancel complete review popup from evaluate review page.
+STEP: Complete with invalid final rating from evaluate review page.
+STEP: Complete with invalid completed date from evaluate review page.
+STEP: Save with invalid rating from evaluate review page.
+generated 1 tests.
+
+Covered elements:
+Total steps: 20
+Unique steps: 16 (of 40) missing:[cancel_complete_review_popup_from_in_progress_review, complete_with_empty_finalization_fields_from_in_progress_review, complete_with_invalid_completed_date_from_in_progress_review, complete_with_invalid_final_rating_from_in_progress_review, complete_with_invalid_rating_from_in_progress_review, complete_with_empty_finalization_fields_from_evaluate_review_page, edit_due_date_less_than_start_date, edit_duplicate_review_data, edit_empty_date_fields, edit_end_date_less_than_start_date, fill_due_date_less_than_start_date, fill_duplicate_review_data, fill_empty_date_fields, fill_empty_employee_name, fill_end_date_less_than_start_date, fill_invalid_supervisor, fill_nonexistent_employee_name, go_back_to_activated_review_state, go_back_to_inactive_review_state, go_back_to_manage_reviews_page_from_add_review_page, go_back_to_manage_reviews_page_from_form_step_2, go_to_edit_review_page, save_edited_review_with_valid_data, save_with_valid_data]
+Unique step-pairs: 19
+Unique requirements: 9
+Variable values: 1
+Unique coverage-values: 0
+Unique coverage-value-pairs: 0
+
+Requirements:[Activated review reached, Add review page reached, Approved review reached, Complete review pop-up reached, Dashboard page reached, Edit review page reached, Evaluate review page reached, Form step 2 reached, In progress review reached, Inactive review reached, Manage reviews page reached]
+Covered:[Activated review reached, Add review page reached, Approved review reached, Complete review pop-up reached, Dashboard page reached, Evaluate review page reached, Form step 2 reached, In progress review reached, Manage reviews page reached]
+Not covered:[Edit review page reached, Inactive review reached]
+Total unique requirements = 9/11 (81.818%) requirements.
+
+Process finished with exit code 0
