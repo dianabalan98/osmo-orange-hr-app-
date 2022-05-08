@@ -3,6 +3,7 @@ import osmo.tester.OSMOConfiguration;
 import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
+import osmo.tester.generator.algorithm.WeightedRandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
 import osmo.tester.generator.endcondition.LengthProbability;
 import osmo.tester.generator.endcondition.structure.ElementCoverage;
@@ -167,7 +168,7 @@ public class ReviewPerformanceModel {
 
     // TEST STEPS
 
-    @TestStep("go_to_manage_review_page")
+    @TestStep(name="go_to_manage_review_page", weight=100)
     public void goToManageReviewPage() {
         scripter.step("Go to manage review page.");
         currentState = stateManageReviewsPage;
@@ -175,7 +176,7 @@ public class ReviewPerformanceModel {
         reviewPerformanceRequirements.covered("Manage reviews page reached");
     }
 
-    @TestStep("go_to_add_review_page")
+    @TestStep(name="go_to_add_review_page", weight=100)
     public void goToAddReviewPage() {
         scripter.step("Go to add review page.");
         currentState = stateAddReviewPage;
@@ -186,35 +187,35 @@ public class ReviewPerformanceModel {
      * Add review page test steps: 4
      */
 
-    @TestStep("go_back_to_manage_reviews_page_from_add_review_page")
+    @TestStep(name="go_back_to_manage_reviews_page_from_add_review_page", weight=1)
     public void goBackToManageReviewsPageFromAddReviewPage() {
         scripter.step("Go back to manage reviews page from add review page.");
         currentState = stateManageReviewsPage;
         reviewPerformanceRequirements.covered("Manage reviews page reached");
     }
 
-    @TestStep("go_back_to_manage_reviews_page_from_form_step_2")
+    @TestStep(name="go_back_to_manage_reviews_page_from_form_step_2", weight=5)
     public void goBackToManageReviewsPageFromFormStep2() {
         scripter.step("Go back to manage reviews page from form step 2.");
         currentState = stateManageReviewsPage;
         reviewPerformanceRequirements.covered("Manage reviews page reached");
     }
 
-    @TestStep("fill_valid_employee_name")
+    @TestStep(name="fill_valid_employee_name", weight=50)
     public void fillValidEmployeeName() {
         scripter.step("Fill valid employee name.");
         currentState = stateFormStep2Enabled;
         reviewPerformanceRequirements.covered("Form step 2 reached");
     }
 
-    @TestStep("fill_nonexistent_employee_name")
+    @TestStep(name="fill_nonexistent_employee_name", weight=1)
     public void fillNonexistentEmployeeName() {
         scripter.step("Fill nonexistent employee name.");
         currentState = stateAddReviewPage;
         reviewPerformanceRequirements.covered("Add review page reached");
     }
 
-    @TestStep("fill_empty_employee_name")
+    @TestStep(name="fill_empty_employee_name", weight=1)
     public void fillEmptyEmployeeName() {
         scripter.step("Fill empty employee name.");
         currentState = stateAddReviewPage;
@@ -225,49 +226,49 @@ public class ReviewPerformanceModel {
      * Add form step 2 enabled test steps
      */
 
-    @TestStep("fill_invalid_supervisor")
+    @TestStep(name="fill_invalid_supervisor", weight=1)
     public void fillInvalidSupervisor() {
         scripter.step("Fill invalid supervisor.");
         currentState = stateFormStep2Enabled;
         reviewPerformanceRequirements.covered("Form step 2 reached");
     }
 
-    @TestStep("fill_empty_date_fields") // from stateFormStep2Enabled
+    @TestStep(name="fill_empty_date_fields", weight=1) // from stateFormStep2Enabled
     public void fillEmptyDateFields() {
         scripter.step("Fill empty date fields.");
         currentState = stateFormStep2Enabled;
         reviewPerformanceRequirements.covered("Form step 2 reached");
     }
 
-    @TestStep("fill_end_date_less_than_start_date") // from stateFormStep2Enabled
+    @TestStep(name="fill_end_date_less_than_start_date", weight=1) // from stateFormStep2Enabled
     public void fillEndDateLessThanStartDate() {
         scripter.step("Fill end date less than start date.");
         currentState = stateFormStep2Enabled;
         reviewPerformanceRequirements.covered("Form step 2 reached");
     }
 
-    @TestStep("fill_due_date_less_than_start_date") // from stateFormStep2Enabled
+    @TestStep(name="fill_due_date_less_than_start_date", weight=1) // from stateFormStep2Enabled
     public void fillDueDateLessThanStartDate() {
         scripter.step("Fill due date less than start date.");
         currentState = stateFormStep2Enabled;
         reviewPerformanceRequirements.covered("Form step 2 reached");
     }
 
-    @TestStep("fill_duplicate_review_data") // from stateFormStep2Enabled
+    @TestStep(name="fill_duplicate_review_data", weight=1) // from stateFormStep2Enabled
     public void fillDuplicateReviewData() {
         scripter.step("Fill duplicate review data.");
         currentState = stateFormStep2Enabled;
         reviewPerformanceRequirements.covered("Form step 2 reached");
     }
 
-    @TestStep("fill_empty_supervisor") // from stateFormStep2Enabled
+    @TestStep(name="fill_empty_supervisor", weight=1) // from stateFormStep2Enabled
     public void fillEmptySupervisor() {
         scripter.step("Fill empty supervisor.");
         currentState = stateFormStep2Enabled;
         reviewPerformanceRequirements.covered("Form step 2 reached");
     }
 
-    @TestStep("save_with_valid_data")
+    @TestStep(name="save_with_valid_data", weight=30)
     public void saveWithValidData() {
         scripter.step("Save with valid data.");
         currentState = stateInactiveReview;
@@ -275,7 +276,7 @@ public class ReviewPerformanceModel {
         reviewPerformanceRequirements.covered("Inactive review reached");
     }
 
-    @TestStep("activate_with_valid_data_from_form_step_2")
+    @TestStep(name="activate_with_valid_data_from_form_step_2", weight=20)
     public void activateWithValidDataFromFormStep2() {
         scripter.step("Activate with valid data from form step 2.");
         currentState = stateActivatedReview;
@@ -283,7 +284,7 @@ public class ReviewPerformanceModel {
         reviewPerformanceRequirements.covered("Activated review reached");
     }
 
-    @TestStep("activate_with_valid_data_from_edit_review_page")
+    @TestStep(name="activate_with_valid_data_from_edit_review_page", weight=30)
     public void activateWithValidDataFromEditReviewPage() {
         scripter.step("Activate with valid data from edit review page.");
         currentState = stateActivatedReview;
@@ -295,7 +296,7 @@ public class ReviewPerformanceModel {
      * Inactive review test steps
      */
 
-    @TestStep("go_to_edit_review_page")
+    @TestStep(name="go_to_edit_review_page", weight=1)
     public void goToEditReviewPage() {
         scripter.step("Go to edit review page.");
         currentState = stateEditReviewPage;
@@ -306,42 +307,42 @@ public class ReviewPerformanceModel {
      * Edit review page test steps
      */
 
-    @TestStep("go_back_to_inactive_review_state")
+    @TestStep(name="go_back_to_inactive_review_state", weight=1)
     public void goBackToInactiveReviewState() {
         scripter.step("Go back to inactive review state.");
         currentState = stateInactiveReview;
         reviewPerformanceRequirements.covered("Inactive review reached");
     }
 
-    @TestStep("save_edited_review_with_valid_data")
+    @TestStep(name="save_edited_review_with_valid_data", weight=1)
     public void saveEditedReviewWithValidData() {
         scripter.step("Save edited review with valid data.");
         currentState = stateInactiveReview;
         reviewPerformanceRequirements.covered("Inactive review reached");
     }
 
-    @TestStep("edit_empty_date_fields")
+    @TestStep(name="edit_empty_date_fields", weight=1)
     public void editEmptyDateFields() {
         scripter.step("Edit with empty date fields.");
         currentState = stateEditReviewPage;
         reviewPerformanceRequirements.covered("Edit review page reached");
     }
 
-    @TestStep("edit_due_date_less_than_start_date")
+    @TestStep(name="edit_due_date_less_than_start_date", weight=1)
     public void editDueDateLessThanStartDate() {
         scripter.step("Edit due date less than start date.");
         currentState = stateEditReviewPage;
         reviewPerformanceRequirements.covered("Edit review page reached");
     }
 
-    @TestStep("edit_end_date_less_than_start_date")
+    @TestStep(name="edit_end_date_less_than_start_date", weight=1)
     public void editEndDateLessThanStartDate() {
         scripter.step("Edit end date less than start date.");
         currentState = stateEditReviewPage;
         reviewPerformanceRequirements.covered("Edit review page reached");
     }
 
-    @TestStep("edit_duplicate_review_data")
+    @TestStep(name="edit_duplicate_review_data", weight=1)
     public void editDuplicateReviewData() {
         scripter.step("Edit duplicate review data.");
         currentState = stateEditReviewPage;
@@ -352,7 +353,7 @@ public class ReviewPerformanceModel {
      * Activated review test steps
      */
 
-    @TestStep("evaluate_review")
+    @TestStep(name="evaluate_review", weight=1)
     public void evaluateReview() {
         scripter.step("Evaluate review.");
         currentState = stateEvaluateReviewPage;
@@ -363,21 +364,21 @@ public class ReviewPerformanceModel {
      * Evaluate review page test steps
      */
 
-    @TestStep("complete_review_with_valid_data_from_evaluate_review_page")
+    @TestStep(name="complete_review_with_valid_data_from_evaluate_review_page", weight=20)
     public void completeReviewWithValidDataFromEvaluateReviewPage() {
         scripter.step("Complete review with valid data from evaluate review page.");
         currentState = stateCompleteReviewPopupOpened;
         reviewPerformanceRequirements.covered("Complete review pop-up reached");
     }
 
-    @TestStep("go_back_to_activated_review_state")
+    @TestStep(name="go_back_to_activated_review_state", weight=1)
     public void goBackToActivatedReviewState() {
         scripter.step("Go back to activated review state.");
         currentState = stateActivatedReview;
         reviewPerformanceRequirements.covered("Activated review reached");
     }
 
-    @TestStep("save_with_valid_data_from_evaluate_review_page")
+    @TestStep(name="save_with_valid_data_from_evaluate_review_page", weight=30)
     public void saveWithValidDataFromEvaluateReviewPage() {
         scripter.step("Save with valid data from evaluate review page.");
         currentState = stateReviewInProgress;
@@ -385,28 +386,28 @@ public class ReviewPerformanceModel {
         reviewPerformanceRequirements.covered("In progress review reached");
     }
 
-    @TestStep("save_with_invalid_rating_from_evaluate_review_page")
+    @TestStep(name="save_with_invalid_rating_from_evaluate_review_page", weight=1)
     public void saveWithInvalidRatingFromEvaluateReviewPage() {
         scripter.step("Save with invalid rating from evaluate review page.");
         currentState = stateEvaluateReviewPage;
         reviewPerformanceRequirements.covered("Evaluate review page reached");
     }
 
-    @TestStep("complete_with_empty_finalization_fields_from_evaluate_review_page")
+    @TestStep(name="complete_with_empty_finalization_fields_from_evaluate_review_page", weight=1)
     public void completeWithEmptyFinalizationFieldsFromEvaluateReviewPage() {
         scripter.step("Complete with empty finalization fields from evaluate review page.");
         currentState = stateEvaluateReviewPage;
         reviewPerformanceRequirements.covered("Evaluate review page reached");
     }
 
-    @TestStep("complete_with_invalid_final_rating_from_evaluate_review_page")
+    @TestStep(name="complete_with_invalid_final_rating_from_evaluate_review_page", weight=1)
     public void completeWithInvalidFinalRatingFromEvaluateReviewPage() {
         scripter.step("Complete with invalid final rating from evaluate review page.");
         currentState = stateEvaluateReviewPage;
         reviewPerformanceRequirements.covered("Evaluate review page reached");
     }
 
-    @TestStep("complete_with_invalid_completed_date_from_evaluate_review_page")
+    @TestStep(name="complete_with_invalid_completed_date_from_evaluate_review_page", weight=1)
     public void completeWithInvalidCompletedDateFromEvaluateReviewPage() {
         scripter.step("Complete with invalid completed date from evaluate review page.");
         currentState = stateEvaluateReviewPage;
@@ -417,35 +418,35 @@ public class ReviewPerformanceModel {
      * Review in progress test steps
      */
 
-    @TestStep("complete_review_with_valid_data_from_in_progress_review")
+    @TestStep(name="complete_review_with_valid_data_from_in_progress_review", weight=60)
     public void completeReviewWithValidDataFromInProgressReview() {
         scripter.step("Complete review with valid data from in progress review.");
         currentState = stateCompleteReviewPopupOpened;
         reviewPerformanceRequirements.covered("Complete review pop-up reached");
     }
 
-    @TestStep("complete_with_invalid_completed_date_from_in_progress_review")
+    @TestStep(name="complete_with_invalid_completed_date_from_in_progress_review", weight=1)
     public void completeReviewWithInvalidCompletedDateFromInProgressReview() {
         scripter.step("Complete review with invalid completed date from in progress review.");
         currentState = stateReviewInProgress;
         reviewPerformanceRequirements.covered("In progress review reached");
     }
 
-    @TestStep("complete_with_invalid_final_rating_from_in_progress_review")
+    @TestStep(name="complete_with_invalid_final_rating_from_in_progress_review", weight=1)
     public void completeReviewWithInvalidFinalRatingFromInProgressReview() {
         scripter.step("Complete review with invalid final rating from in progress review.");
         currentState = stateReviewInProgress;
         reviewPerformanceRequirements.covered("In progress review reached");
     }
 
-    @TestStep("complete_with_invalid_rating_from_in_progress_review")
+    @TestStep(name="complete_with_invalid_rating_from_in_progress_review", weight=1)
     public void completeReviewWithInvalidRatingFromInProgressReview() {
         scripter.step("Complete review with invalid rating from in progress review.");
         currentState = stateReviewInProgress;
         reviewPerformanceRequirements.covered("In progress review reached");
     }
 
-    @TestStep("complete_with_empty_finalization_fields_from_in_progress_review")
+    @TestStep(name="complete_with_empty_finalization_fields_from_in_progress_review", weight=1)
     public void completeReviewWithEmptyFinalizationFieldsFromInProgressReview() {
         scripter.step("Complete review with empty finalization fields from in progress review.");
         currentState = stateReviewInProgress;
@@ -455,21 +456,21 @@ public class ReviewPerformanceModel {
     /**
      * Complete review popup opened test steps
      */
-    @TestStep("cancel_complete_review_popup_from_in_progress_review")
+    @TestStep(name="cancel_complete_review_popup_from_in_progress_review", weight=1)
     public void cancelCompleteReviewPopupFromInProgressReview() {
         scripter.step("Cancel complete review popup from in progress review.");
         currentState = stateReviewInProgress;
         reviewPerformanceRequirements.covered("In progress review reached");
     }
 
-    @TestStep("cancel_complete_review_popup_from_evaluate_review_page")
+    @TestStep(name="cancel_complete_review_popup_from_evaluate_review_page", weight=1)
     public void cancelCompleteReviewPopupFromEvaluateReviewPage() {
         scripter.step("Cancel complete review popup from evaluate review page.");
         currentState = stateEvaluateReviewPage;
         reviewPerformanceRequirements.covered("Evaluate review page reached");
     }
 
-    @TestStep("confirm_review_completion")
+    @TestStep(name="confirm_review_completion", weight=60)
     public void confirmReviewCompletion() {
         scripter.step("Confirm review completion.");
         currentState = stateReviewApproved;
@@ -481,7 +482,7 @@ public class ReviewPerformanceModel {
      * Approved review test steps
      */
 
-    @TestStep("return_to_manage_reviews_page")
+    @TestStep(name="return_to_manage_reviews_page", weight=40)
     public void returnToManageReviewsPage() {
         scripter.step("Return to manage reviews page.");
         currentState = stateManageReviewsPage;
@@ -496,13 +497,17 @@ public class ReviewPerformanceModel {
 
     public static void main(String[] args) {
 
+        ElementCoverageRequirement req;
         ReviewPerformanceModel rpModel = new ReviewPerformanceModel();
         OSMOTester tester = new OSMOTester();
-        ElementCoverageRequirement req;
-
         tester.addModelObject(rpModel);
-        tester.setAlgorithm(new RandomAlgorithm());
         tester.setSuiteEndCondition(new Length(1));
+
+        /**
+         * Set the algorithm
+         */
+        //tester.setAlgorithm(new RandomAlgorithm());
+        tester.setAlgorithm(new WeightedRandomAlgorithm());
 
         /**
          * Full step coverage

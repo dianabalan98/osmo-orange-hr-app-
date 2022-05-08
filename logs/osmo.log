@@ -1,12 +1,9 @@
-2022-04-30 15:36:53,425 INFO o.t.o.g.GreedyOptimizer [main] greedy 1 starting up, population size 1000
-2022-04-30 15:36:53,482 INFO o.t.o.g.GreedyOptimizer [main] 1:starting iteration 0
-2022-04-30 15:37:00,400 INFO o.t.o.g.GreedyOptimizer [main] 1:sorting and pruning iteration results
-2022-04-30 15:37:00,640 INFO o.t.o.g.GreedyOptimizer [main] 1:loops in sort:15880, tests:15, steps:38000
-2022-04-30 15:37:00,646 INFO o.t.o.g.GreedyOptimizer [main] 1:iteration time:(1)7164 gain:9061
-2022-04-30 15:37:00,647 INFO o.t.o.g.GreedyOptimizer [main] 1:starting iteration 1
-2022-04-30 15:37:03,704 INFO o.t.o.g.GreedyOptimizer [main] 1:sorting and pruning iteration results
-2022-04-30 15:37:03,849 INFO o.t.o.g.GreedyOptimizer [main] 1:loops in sort:17119, tests:16, steps:38570
-2022-04-30 15:37:03,850 INFO o.t.o.g.GreedyOptimizer [main] 1:iteration time:(2)3203 gain:-8
-2022-04-30 15:37:03,851 INFO o.t.o.g.GreedyOptimizer [main] gain under threshold (-8 vs 100)
-2022-04-30 15:37:03,855 INFO o.t.o.g.GreedyOptimizer [main] GreedyOptimizer 1 generated 2000 tests.
-2022-04-30 15:37:03,855 INFO o.t.o.g.GreedyOptimizer [main] Resulting suite has 16 tests. Generation time 10436 millis
+2022-05-08 22:02:05,456 ERROR o.t.g.MainGenerator [main] Error in test generation:Weight must be > 0. Was 0.
+java.lang.IllegalArgumentException: Weight must be > 0. Was 0.
+	at osmo.common.Randomizer.rawWeightedRandomFrom(Randomizer.java:190) ~[osmotester-3.7.1.jar:?]
+	at osmo.tester.generator.algorithm.WeightedRandomAlgorithm.choose(WeightedRandomAlgorithm.java:39) ~[osmotester-3.7.1.jar:?]
+	at osmo.tester.generator.MainGenerator.nextStep(MainGenerator.java:266) [osmotester-3.7.1.jar:?]
+	at osmo.tester.generator.MainGenerator.nextTest(MainGenerator.java:155) [osmotester-3.7.1.jar:?]
+	at osmo.tester.generator.MainGenerator.generate(MainGenerator.java:94) [osmotester-3.7.1.jar:?]
+	at osmo.tester.OSMOTester.generate(OSMOTester.java:90) [osmotester-3.7.1.jar:?]
+	at hrapp_models.ReviewPerformanceModel.main(ReviewPerformanceModel.java:536) [classes/:?]
