@@ -2,6 +2,7 @@ package hrapp_models;
 import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
+import osmo.tester.generator.algorithm.WeightedRandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
 import osmo.tester.generator.endcondition.StateCoverage;
 import osmo.tester.generator.endcondition.structure.ElementCoverage;
@@ -79,7 +80,7 @@ public class LoginModel {
         return isUserLoggedIn && currentState.equals(stateDashboardPage);
     }
 
-    @TestStep("load_login_page")
+    @TestStep(name="load_login_page", weight=100)
     public void loadLoginPage() {
         scripter.step("Load login page.");
         currentState = stateLoginPage;
@@ -87,27 +88,27 @@ public class LoginModel {
         loginRequirements.covered("Login page reached");
     }
 
-    @TestStep("login_empty_username")
+    @TestStep(name="login_empty_username", weight=10)
     public void loginEmptyUsername() {
         scripter.step("Login with empty username.");
     }
 
-    @TestStep("login_empty_password")
+    @TestStep(name="login_empty_password", weight=10)
     public void loginEmptyPassword() {
         scripter.step("Login with empty password.");
     }
 
-    @TestStep("login_invalid_credentials")
+    @TestStep(name="login_invalid_credentials", weight=20)
     public void loginInvalidCredentials() {
         scripter.step("Login with invalid credentials.");
     }
 
-    @TestStep("login_disabled_user")
+    @TestStep(name="login_disabled_user", weight=10)
     public void loginDisabledUser() {
         scripter.step("Login with disabled user.");
     }
 
-    @TestStep("login_enabled_standard_user")
+    @TestStep(name="login_enabled_standard_user", weight=50)
     public void loginEnabledStandardUser() {
         scripter.step("Login with enabled standard user.");
         isUserLoggedIn = true;
@@ -115,7 +116,7 @@ public class LoginModel {
         loginRequirements.covered("Dashboard page reached");
     }
 
-    @TestStep("logout")
+    @TestStep(name="logout", weight=100)
     public void logout() {
         scripter.step("Logout.");
         isUserLoggedIn = false;
@@ -130,13 +131,17 @@ public class LoginModel {
 
     public static void main(String[] args) {
 
+        ElementCoverageRequirement req;
         LoginModel loginModel = new LoginModel();
         OSMOTester tester = new OSMOTester();
-        ElementCoverageRequirement req;
-
         tester.addModelObject(loginModel);
-        tester.setAlgorithm(new RandomAlgorithm());
         tester.setSuiteEndCondition(new Length(1));
+
+        /**
+         * Set the algorithm
+         */
+        //tester.setAlgorithm(new RandomAlgorithm());
+        tester.setAlgorithm(new WeightedRandomAlgorithm());
 
         /**
          * Full step coverage
