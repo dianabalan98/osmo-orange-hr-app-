@@ -11,7 +11,11 @@ import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.generator.testsuite.TestSuite;
 import osmo.tester.model.Requirements;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class LoginModel {
@@ -31,9 +35,6 @@ public class LoginModel {
     // other variables
     public TestSuite suite;
     public final Scripter scripter;
-
-    long start = System.currentTimeMillis();
-    long finish = System.currentTimeMillis();
 
     public LoginModel() {
         scripter = new Scripter(System.out);
@@ -55,8 +56,6 @@ public class LoginModel {
     @AfterSuite
     public void done() {
         int tests = suite.getAllTestCases().size();
-        System.out.println("Total miliseconds: " + (finish - start));
-
     }
 
     @Guard({"load_login_page", "login_empty_username", "login_empty_password", "login_invalid_credentials",
@@ -129,19 +128,19 @@ public class LoginModel {
     }*/
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
+        UtilsMethods utils = new UtilsMethods();
         ElementCoverageRequirement req;
-        LoginModel loginModel = new LoginModel();
-        OSMOTester tester = new OSMOTester();
-        tester.addModelObject(loginModel);
-        tester.setSuiteEndCondition(new Length(1));
+        /*OSMOTester tester = new OSMOTester();
+        tester.addModelObject(new LoginModel());
+        tester.setSuiteEndCondition(new Length(1));*/
 
         /**
          * Set the algorithm
          */
         //tester.setAlgorithm(new RandomAlgorithm());
-        tester.setAlgorithm(new WeightedRandomAlgorithm());
+        //tester.setAlgorithm(new WeightedRandomAlgorithm());
 
         /**
          * Full step coverage
@@ -168,7 +167,7 @@ public class LoginModel {
         /**
          * Random reached logout step
          */
-        tester.setTestEndCondition(new StepCoverage("logout"));
+        //tester.setTestEndCondition(new StepCoverage("logout"));
 
 
         /**
@@ -178,7 +177,24 @@ public class LoginModel {
         //tester.setTestEndCondition(new StateCoverage("test","login_enabled_standard_user"));
 
         // test generation command
-        tester.generate(System.currentTimeMillis()); //random seed
+        //tester.generate(System.currentTimeMillis()); //random seed
+        String path = "login-test-cases\\pathTest";
+
+        // create new folder in the given location with the given folder name
+        utils.createNewTestOutputDirectory(path);
+        // create CSV file for metrics
+        utils.initializeCSVFile(path);
+
+        for(int i=1; i<=100; i++) {
+            OSMOTester tester = new OSMOTester();
+            tester.addModelObject(new LoginModel());
+            tester.setSuiteEndCondition(new Length(1));
+            tester.setAlgorithm(new RandomAlgorithm());
+            tester.setTestEndCondition(new StepCoverage("logout"));
+
+            utils.generateAndSaveOsmoOutput2(i, tester, path);
+        }
+
     }
 
 }

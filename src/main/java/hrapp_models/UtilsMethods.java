@@ -1,9 +1,19 @@
 package hrapp_models;
 
+import osmo.tester.OSMOTester;
+import osmo.tester.generator.algorithm.RandomAlgorithm;
+import osmo.tester.generator.endcondition.Length;
+import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.model.Requirements;
 
+import java.io.*;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UtilsMethods {
 
@@ -14,6 +24,7 @@ public class UtilsMethods {
     private ArrayList<String> addProjectStates = new ArrayList<>();
     private ArrayList<String> reviewPerformanceExpectedSteps = new ArrayList<>();
     private ArrayList<String> reviewPerformanceStates = new ArrayList<>();
+    public String outputPath = "C:\\osmo_disertatie\\osmo_dissertation_hrapp\\src\\main\\java\\hrapp_models\\testcases\\";
 
     // CONSTRUCTOR
     public UtilsMethods() {
@@ -141,6 +152,162 @@ public class UtilsMethods {
 
     public void initializeReviewPerformanceStates() {
 
+    }
+
+
+    /**
+     * Create new directory
+     */
+    public void createNewTestOutputDirectory(String folderPath) {
+        new File(outputPath + folderPath).mkdirs();
+    }
+
+    /**
+     * Export metrics results as csv file
+     */
+    public void initializeCSVFile(String path) throws IOException {
+
+        String filePath = outputPath + "\\" + path + "\\metrics.csv";
+        File file = new File(filePath);
+        file.createNewFile(); // if file already exists will do nothing
+
+        try {
+            PrintWriter pw = new PrintWriter(filePath);
+            // Header column values
+            StringBuilder builder = new StringBuilder();
+            String columns = "Id, Generation time, Nr of test steps";
+            builder.append(columns + "\n");
+            pw.write(builder.toString());
+            pw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addValuesToCSVFile(String path, String id, String time, String steps) throws IOException {
+
+        try {
+            File file =new File(outputPath + "\\" + path + "\\metrics.csv");
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file,true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+
+            pw.print(id + "," + time + "," + steps);
+            pw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Redirect OSMO output to PrintStream and return the result as string
+     */
+    public String redirectOutputToString(OSMOTester tester) {
+
+        // Create a stream to hold the output
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        PrintStream ps = new PrintStream(baos);
+        // IMPORTANT: Save the old System.out!
+        PrintStream old = System.out;
+        // Tell Java to use your special stream
+        System.setOut(ps);
+        // Print some output: goes to your special stream
+
+        // GENERATE TEST CASES
+        tester.generate(System.currentTimeMillis()); //random seed
+
+        String result = baos.toString();
+        // Put things back
+        System.out.flush();
+        System.setOut(old);
+
+        return result;
+    }
+
+    /**
+     * Export results as .txt files
+     */
+    public void saveResultsToTxtFile(String text, String path, String fileName) throws IOException {
+
+        FileWriter fileWriter = new FileWriter(outputPath + "\\" + path + "\\" + fileName + ".txt");
+        PrintWriter out = new PrintWriter(fileWriter);
+        out.print(text);
+        out.close();
+
+    }
+
+    /**
+     * Extract test steps from String output
+     */
+    public String extractTestSteps(String text) {
+
+        String result = text.substring(text.indexOf("Total steps: ") + 13);
+        result = result.substring(0, result.indexOf("Unique steps:"));
+
+        return result;
+    }
+
+    /**
+     * Run OSMO generator x times and save OSMO output
+     */
+    public void generateAndSaveOsmoOutput(int nrOfTests, OSMOTester tester, String folderPath) throws IOException {
+
+        // create new folder in the given location with the given folder name
+        createNewTestOutputDirectory(folderPath);
+
+        // create CSV file for metrics
+        initializeCSVFile(folderPath);
+
+        // start FOR CYCLE up until given number of iterations (e.g. 1 -> 100)
+        for(int i = 1; i<=nrOfTests; i++) {
+
+            // start time initialization
+            long startTime = System.nanoTime();
+
+            // generate test cases from OSMO tester object + redirect output to a string to be returned
+            String osmoResults = redirectOutputToString(tester);
+
+            // calculate total time
+            long endTime = System.nanoTime();
+            long executionTime = TimeUnit.MILLISECONDS.convert(Duration.ofNanos(endTime - startTime));
+
+            // extract total steps value from OSMO output string
+            String testSteps = extractTestSteps(osmoResults);
+
+            // add current id + total time + total steps to metrics csv file, separated by commas
+            addValuesToCSVFile(folderPath, String.valueOf(i), String.valueOf(executionTime), String.valueOf(testSteps));
+
+            // save test steps in txt file in the new folder from the OSMO string results
+            saveResultsToTxtFile(osmoResults, folderPath, "test" + i);
+
+        }
+    }
+
+    public void generateAndSaveOsmoOutput2(int nrOfTests, OSMOTester tester, String folderPath) throws IOException {
+
+        // start time initialization
+        long startTime = System.nanoTime();
+
+        // generate test cases from OSMO tester object + redirect output to a string to be returned
+        String osmoResults = redirectOutputToString(tester);
+
+        // calculate total time
+        long endTime = System.nanoTime();
+        long generationTime = TimeUnit.MILLISECONDS.convert(Duration.ofNanos(endTime - startTime));
+        System.out.println("Generation time: " + generationTime);
+
+        // extract total steps value from OSMO output string
+        String testSteps = extractTestSteps(osmoResults);
+
+        // add current id + total time + total steps to metrics csv file, separated by commas
+        // TODO: execution time is incorrect after first iteration ? much shorter
+        addValuesToCSVFile(folderPath, String.valueOf(nrOfTests), String.valueOf(generationTime), String.valueOf(testSteps));
+
+        // save test steps in txt file in the new folder from the OSMO string results
+        saveResultsToTxtFile(osmoResults, folderPath, "test" + nrOfTests);
     }
 
 }
