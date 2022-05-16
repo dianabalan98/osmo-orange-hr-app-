@@ -1,0 +1,61 @@
+---------------------------------------------------
+Starting test: 1
+STEP: Go to projects page.
+STEP: Go to add project page.
+STEP: Add project with all fields valid 1 admin.
+---------------------------------------------------
+Starting test: 2
+STEP: Go to projects page.
+STEP: Go to add project page.
+STEP: Cancel add project.
+STEP: Go to add project page.
+---------------------------------------------------
+Starting test: 3
+STEP: Go to projects page.
+STEP: Go to add project page.
+STEP: Add project with empty project name.
+STEP: Add project with duplicate admins.
+STEP: Add project with all fields valid 4 admins.
+STEP: Return to projects page.
+STEP: Go to add project page.
+STEP: Cancel add project.
+STEP: Go to add project page.
+STEP: Cancel add project.
+STEP: Go to add project page.
+STEP: Add project with required fields only.
+STEP: Return to projects page.
+STEP: Go to add project page.
+STEP: Add project with duplicate admins.
+STEP: Add project with empty customer name.
+STEP: Add project with required fields only.
+STEP: Return to projects page.
+STEP: Go to add project page.
+STEP: Add project with all fields valid 4 admins.
+STEP: Return to projects page.
+---------------------------------------------------
+Starting test: 4
+STEP: Go to projects page.
+STEP: Go to add project page.
+---------------------------------------------------
+Starting test: 5
+STEP: Go to projects page.
+STEP: Go to add project page.
+STEP: Open add customer pop-up
+STEP: Add project with newly added customer.
+STEP: Return to projects page.
+STEP: Go to add project page.
+generated 5 tests.
+
+Covered elements:
+Total steps: 36
+Unique steps: 12 (of 17) missing:[add_customer_with_duplicate_name, add_project_with_duplicate_project_name, add_project_with_nonexistent_admin, add_project_with_nonexistent_customer_name, cancel_popup]
+Unique step-pairs: 19
+Unique requirements: 5
+Variable values: 2
+Unique coverage-values: 0
+Unique coverage-value-pairs: 0
+
+Requirements:[Add customer pop-up opened, Add project page reached, Dashboard page reached, Project added, Projects page reached]
+Covered:[Add customer pop-up opened, Add project page reached, Dashboard page reached, Project added, Projects page reached]
+Not covered:[]
+Total unique requirements = 5/5 (100%) requirements.

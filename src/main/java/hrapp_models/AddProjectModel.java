@@ -11,6 +11,7 @@ import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.generator.testsuite.TestSuite;
 import osmo.tester.model.Requirements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddProjectModel {
@@ -236,19 +237,20 @@ public class AddProjectModel {
     }*/
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
+        UtilsMethods utils = new UtilsMethods();
         ElementCoverageRequirement req;
-        AddProjectModel addProjectModel = new AddProjectModel();
+        /*AddProjectModel addProjectModel = new AddProjectModel();
         OSMOTester tester = new OSMOTester();
         tester.addModelObject(addProjectModel);
-        tester.setSuiteEndCondition(new Length(1));
+        tester.setSuiteEndCondition(new Length(1));*/
 
         /**
          * Set the algorithm
          */
         //tester.setAlgorithm(new RandomAlgorithm());
-        tester.setAlgorithm(new WeightedRandomAlgorithm());
+        //tester.setAlgorithm(new WeightedRandomAlgorithm());
 
         /**
          * Full step coverage
@@ -270,10 +272,47 @@ public class AddProjectModel {
         /**
          * Random reached addCustomerWithDuplicateName step
          */
-        tester.setTestEndCondition(new StepCoverage("add_customer_with_duplicate_name"));
+        //tester.setTestEndCondition(new StepCoverage("add_customer_with_duplicate_name"));
 
 
         // test generation command
-        tester.generate(System.currentTimeMillis()); //random seed
+        //tester.generate(System.currentTimeMillis()); //random seed
+
+
+        String pathReachedStep = "AddProjectTestCases\\random_reached_step_add_customer_with_duplicate_name";
+        String pathStepCoverage = "AddProjectTestCases\\random_step_coverage_100";
+        String pathStateCoverage = "AddProjectTestCases\\random_state_coverage_100";
+        String pathStepAndStateCoverage = "AddProjectTestCases\\random_step_and_state_coverage_100";
+        String path = pathReachedStep;
+
+        // create new folder in the given location with the given folder name
+        utils.createNewTestOutputDirectory(path);
+        // create CSV file for metrics
+        utils.initializeCSVFile(path);
+
+        for(int i=1; i<=100; i++) {
+            OSMOTester tester = new OSMOTester();
+            tester.addModelObject(new AddProjectModel());
+            tester.setSuiteEndCondition(new Length(1));
+            tester.setAlgorithm(new RandomAlgorithm());
+
+            // reached step
+            tester.setTestEndCondition(new StepCoverage("add_customer_with_duplicate_name"));
+
+            //full step coverage
+            /*ArrayList<String> addProjectExpectedSteps = utils.getAddProjectExpectedSteps();
+            StepCoverage steps = new StepCoverage();
+            for (String step : addProjectExpectedSteps) {
+                steps.addRequiredStep(step);
+            }
+            tester.setTestEndCondition(steps);*/
+
+            // full state coverage
+            /*req = new ElementCoverageRequirement(0, 0, new AddProjectModel().addProjectRequirements.getRequirements().size());
+            tester.setSuiteEndCondition(new ElementCoverage(req));*/
+
+
+            utils.generateAndSaveOsmoOutput2(i, tester, path);
+        }
     }
 }

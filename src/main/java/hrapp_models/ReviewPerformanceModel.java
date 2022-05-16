@@ -12,6 +12,7 @@ import osmo.tester.generator.endcondition.structure.StepCoverage;
 import osmo.tester.generator.testsuite.TestSuite;
 import osmo.tester.model.Requirements;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReviewPerformanceModel {
@@ -495,19 +496,20 @@ public class ReviewPerformanceModel {
         scripter.step("CURRENT STATE: "+currentState+".");
     }*/
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
+        UtilsMethods utils = new UtilsMethods();
         ElementCoverageRequirement req;
-        ReviewPerformanceModel rpModel = new ReviewPerformanceModel();
+        /*ReviewPerformanceModel rpModel = new ReviewPerformanceModel();
         OSMOTester tester = new OSMOTester();
         tester.addModelObject(rpModel);
-        tester.setSuiteEndCondition(new Length(1));
+        tester.setSuiteEndCondition(new Length(1));*/
 
         /**
          * Set the algorithm
          */
         //tester.setAlgorithm(new RandomAlgorithm());
-        tester.setAlgorithm(new WeightedRandomAlgorithm());
+        //tester.setAlgorithm(new WeightedRandomAlgorithm());
 
         /**
          * Full step coverage
@@ -527,13 +529,50 @@ public class ReviewPerformanceModel {
         tester.setSuiteEndCondition(new ElementCoverage(req));*/
 
         /**
-         * Random reached logout step
+         * Random reached step
          */
-        tester.setTestEndCondition(new StepCoverage("save_with_invalid_rating_from_evaluate_review_page"));
+        //tester.setTestEndCondition(new StepCoverage("save_with_invalid_rating_from_evaluate_review_page"));
 
 
         // test generation command
-        tester.generate(System.currentTimeMillis()); //random seed
+        //tester.generate(System.currentTimeMillis()); //random seed
+
+
+        String pathReachedStep = "ReviewPerformanceTestCases\\random_reached_step_save_with_invalid_rating";
+        String pathStepCoverage = "ReviewPerformanceTestCases\\random_step_coverage_100";
+        String pathStateCoverage = "ReviewPerformanceTestCases\\random_state_coverage_100";
+        String pathStepAndStateCoverage = "ReviewPerformanceTestCases\\random_step_and_state_coverage_100";
+        String path = pathStateCoverage;
+
+        // create new folder in the given location with the given folder name
+        utils.createNewTestOutputDirectory(path);
+        // create CSV file for metrics
+        utils.initializeCSVFile(path);
+
+        for(int i=1; i<=100; i++) {
+            OSMOTester tester = new OSMOTester();
+            tester.addModelObject(new ReviewPerformanceModel());
+            tester.setSuiteEndCondition(new Length(1));
+            tester.setAlgorithm(new RandomAlgorithm());
+
+            // reached step
+            //tester.setTestEndCondition(new StepCoverage("save_with_invalid_rating_from_evaluate_review_page"));
+
+            //full step coverage
+            /*ArrayList<String> reviewPerformanceExpectedSteps = utils.getReviewPerformanceExpectedSteps();
+            StepCoverage steps = new StepCoverage();
+            for (String step : reviewPerformanceExpectedSteps) {
+                steps.addRequiredStep(step);
+            }
+            tester.setTestEndCondition(steps);*/
+
+            // full state coverage
+            req = new ElementCoverageRequirement(0, 0, new ReviewPerformanceModel().reviewPerformanceRequirements.getRequirements().size());
+            tester.setSuiteEndCondition(new ElementCoverage(req));
+
+
+            utils.generateAndSaveOsmoOutput2(i, tester, path);
+        }
 
     }
 }

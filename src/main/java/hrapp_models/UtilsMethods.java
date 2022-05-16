@@ -24,7 +24,7 @@ public class UtilsMethods {
     private ArrayList<String> addProjectStates = new ArrayList<>();
     private ArrayList<String> reviewPerformanceExpectedSteps = new ArrayList<>();
     private ArrayList<String> reviewPerformanceStates = new ArrayList<>();
-    public String outputPath = "C:\\osmo_disertatie\\osmo_dissertation_hrapp\\src\\main\\java\\hrapp_models\\testcases\\";
+    public String outputPath = "C:\\osmo_disertatie\\osmo_dissertation_hrapp\\src\\main\\java\\hrapp_models\\testcases2\\";
 
     // CONSTRUCTOR
     public UtilsMethods() {

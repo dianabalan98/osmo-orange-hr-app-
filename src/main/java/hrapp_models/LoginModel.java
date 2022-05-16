@@ -178,10 +178,14 @@ public class LoginModel {
 
         // test generation command
         //tester.generate(System.currentTimeMillis()); //random seed
-        String path = "login-test-cases\\pathTest";
+        String pathReachedStep = "LoginTestCases\\random_reached_step_logout";
+        String pathStepCoverage = "LoginTestCases\\random_step_coverage_100";
+        String pathStateCoverage = "LoginTestCases\\random_state_coverage_100";
+        String pathStepAndStateCoverage = "LoginTestCases\\random_step_and_state_coverage_100";
+        String path = pathStepCoverage;
 
         // create new folder in the given location with the given folder name
-        utils.createNewTestOutputDirectory(path);
+        //utils.createNewTestOutputDirectory(path);
         // create CSV file for metrics
         utils.initializeCSVFile(path);
 
@@ -190,7 +194,22 @@ public class LoginModel {
             tester.addModelObject(new LoginModel());
             tester.setSuiteEndCondition(new Length(1));
             tester.setAlgorithm(new RandomAlgorithm());
-            tester.setTestEndCondition(new StepCoverage("logout"));
+
+            // reached step
+            //tester.setTestEndCondition(new StepCoverage("logout"));
+
+            //full step coverage
+            ArrayList<String> loginExpectedSteps = utils.getLoginExpectedSteps();
+            StepCoverage steps = new StepCoverage();
+            for (String step : loginExpectedSteps) {
+                steps.addRequiredStep(step);
+            }
+            tester.setTestEndCondition(steps);
+
+            // full state coverage
+            /*req = new ElementCoverageRequirement(0, 0, new LoginModel().loginRequirements.getRequirements().size());
+            tester.setSuiteEndCondition(new ElementCoverage(req));*/
+
 
             utils.generateAndSaveOsmoOutput2(i, tester, path);
         }
