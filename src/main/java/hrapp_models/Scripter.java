@@ -10,7 +10,6 @@ public class Scripter {
     }
 
     public void step(String name) {
-        //out.println("STEP: " + name);
         System.out.println("STEP: " + name);
     }
 }

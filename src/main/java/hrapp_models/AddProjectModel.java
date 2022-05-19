@@ -222,7 +222,7 @@ public class AddProjectModel {
         addProjectRequirements.covered("Project added");
     }
 
-    @TestStep(name="return_to_projects_page", weight=10)
+    @TestStep(name="return_to_projects_page", weight=100)
     public void returnToProjectsPage() {
         scripter.step("Return to projects page.");
         currentState = stateProjectsPage;
@@ -283,7 +283,13 @@ public class AddProjectModel {
         String pathStepCoverage = "AddProjectTestCases\\random_step_coverage_100";
         String pathStateCoverage = "AddProjectTestCases\\random_state_coverage_100";
         String pathStepAndStateCoverage = "AddProjectTestCases\\random_step_and_state_coverage_100";
-        String path = pathReachedStep;
+
+        String pathWeightedReachedStep = "AddProjectTestCases\\weighted_random_reached_step_add_customer_with_duplicate_name";
+        String pathWeightedStepCoverage = "AddProjectTestCases\\weighted_random_step_coverage_100";
+        String pathWeightedStateCoverage = "AddProjectTestCases\\weighted_random_state_coverage_100";
+        String pathWeightedStepAndStateCoverage = "AddProjectTestCases\\weighted_random_step_and_state_coverage_100";
+
+        String path = pathWeightedStateCoverage;
 
         // create new folder in the given location with the given folder name
         utils.createNewTestOutputDirectory(path);
@@ -294,10 +300,11 @@ public class AddProjectModel {
             OSMOTester tester = new OSMOTester();
             tester.addModelObject(new AddProjectModel());
             tester.setSuiteEndCondition(new Length(1));
-            tester.setAlgorithm(new RandomAlgorithm());
+            //tester.setAlgorithm(new RandomAlgorithm());
+            tester.setAlgorithm(new WeightedRandomAlgorithm());
 
             // reached step
-            tester.setTestEndCondition(new StepCoverage("add_customer_with_duplicate_name"));
+            //tester.setTestEndCondition(new StepCoverage("add_customer_with_duplicate_name"));
 
             //full step coverage
             /*ArrayList<String> addProjectExpectedSteps = utils.getAddProjectExpectedSteps();
@@ -308,8 +315,8 @@ public class AddProjectModel {
             tester.setTestEndCondition(steps);*/
 
             // full state coverage
-            /*req = new ElementCoverageRequirement(0, 0, new AddProjectModel().addProjectRequirements.getRequirements().size());
-            tester.setSuiteEndCondition(new ElementCoverage(req));*/
+            req = new ElementCoverageRequirement(0, 0, new AddProjectModel().addProjectRequirements.getRequirements().size());
+            tester.setSuiteEndCondition(new ElementCoverage(req));
 
 
             utils.generateAndSaveOsmoOutput2(i, tester, path);
