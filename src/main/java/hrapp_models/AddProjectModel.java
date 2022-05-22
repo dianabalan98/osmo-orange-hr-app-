@@ -2,6 +2,7 @@ package hrapp_models;
 import osmo.tester.OSMOConfiguration;
 import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
+import osmo.tester.generator.algorithm.BalancingAlgorithm;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
 import osmo.tester.generator.algorithm.WeightedRandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
@@ -289,7 +290,11 @@ public class AddProjectModel {
         String pathWeightedStateCoverage = "AddProjectTestCases\\weighted_random_state_coverage_100";
         String pathWeightedStepAndStateCoverage = "AddProjectTestCases\\weighted_random_step_and_state_coverage_100";
 
-        String path = pathWeightedStateCoverage;
+        String balancingAlgoReachedStep = "AddProjectTestCases\\balancing_algorithm_reached_step_add_customer_with_duplicate_name";
+        String balancingAlgoStepCoverage = "AddProjectTestCases\\balancing_algorithm_step_coverage_100";
+        String balancingAlgoStateCoverage = "AddProjectTestCases\\balancing_algorithm_state_coverage_100";
+
+        String path = balancingAlgoStateCoverage;
 
         // create new folder in the given location with the given folder name
         utils.createNewTestOutputDirectory(path);
@@ -301,7 +306,8 @@ public class AddProjectModel {
             tester.addModelObject(new AddProjectModel());
             tester.setSuiteEndCondition(new Length(1));
             //tester.setAlgorithm(new RandomAlgorithm());
-            tester.setAlgorithm(new WeightedRandomAlgorithm());
+            //tester.setAlgorithm(new WeightedRandomAlgorithm());
+            tester.setAlgorithm(new BalancingAlgorithm());
 
             // reached step
             //tester.setTestEndCondition(new StepCoverage("add_customer_with_duplicate_name"));

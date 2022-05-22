@@ -1,0 +1,23 @@
+---------------------------------------------------
+Starting test: 1
+STEP: Go to projects page.
+STEP: Go to add project page.
+STEP: Add project with empty customer name.
+STEP: Add project with nonexistent admin.
+STEP: Open add customer pop-up
+STEP: Add project with newly added customer.
+generated 1 tests.
+
+Covered elements:
+Total steps: 6
+Unique steps: 6 (of 17) missing:[add_customer_with_duplicate_name, add_project_all_fields_valid_1_admin, add_project_all_fields_valid_4_admins, add_project_required_fields_only, add_project_with_duplicate_admins, add_project_with_duplicate_project_name, add_project_with_empty_project_name, add_project_with_nonexistent_customer_name, cancel, cancel_popup, return_to_projects_page]
+Unique step-pairs: 6
+Unique requirements: 5
+Variable values: 2
+Unique coverage-values: 0
+Unique coverage-value-pairs: 0
+
+Requirements:[Add customer pop-up opened, Add project page reached, Dashboard page reached, Project added, Projects page reached]
+Covered:[Add customer pop-up opened, Add project page reached, Dashboard page reached, Project added, Projects page reached]
+Not covered:[]
+Total unique requirements = 5/5 (100%) requirements.

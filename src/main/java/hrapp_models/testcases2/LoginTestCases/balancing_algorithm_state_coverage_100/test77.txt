@@ -1,0 +1,48 @@
+---------------------------------------------------
+Starting test: 1
+STEP: Load login page.
+STEP: Login with invalid credentials.
+STEP: Login with enabled standard user.
+STEP: Logout.
+STEP: Login with empty username.
+STEP: Login with disabled user.
+STEP: Login with empty password.
+STEP: Login with empty username.
+STEP: Login with enabled standard user.
+STEP: Logout.
+STEP: Login with invalid credentials.
+STEP: Login with empty password.
+STEP: Login with invalid credentials.
+STEP: Login with invalid credentials.
+STEP: Login with empty username.
+STEP: Login with empty password.
+STEP: Login with empty password.
+STEP: Login with enabled standard user.
+STEP: Logout.
+STEP: Login with empty password.
+STEP: Login with disabled user.
+STEP: Login with invalid credentials.
+STEP: Login with disabled user.
+STEP: Login with empty username.
+STEP: Login with empty username.
+STEP: Login with invalid credentials.
+STEP: Login with enabled standard user.
+STEP: Logout.
+STEP: Login with disabled user.
+STEP: Login with enabled standard user.
+STEP: Logout.
+generated 1 tests.
+
+Covered elements:
+Total steps: 31
+Unique steps: 7 (of 7)
+Unique step-pairs: 26
+Unique requirements: 2
+Variable values: 2
+Unique coverage-values: 0
+Unique coverage-value-pairs: 0
+
+Requirements:[Dashboard page reached, Login page reached]
+Covered:[Dashboard page reached, Login page reached]
+Not covered:[]
+Total unique requirements = 2/2 (100%) requirements.

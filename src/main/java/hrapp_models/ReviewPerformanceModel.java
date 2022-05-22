@@ -2,6 +2,7 @@ package hrapp_models;
 import osmo.tester.OSMOConfiguration;
 import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
+import osmo.tester.generator.algorithm.BalancingAlgorithm;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
 import osmo.tester.generator.algorithm.WeightedRandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
@@ -548,7 +549,11 @@ public class ReviewPerformanceModel {
         String pathWeightedStateCoverage = "ReviewPerformanceTestCases\\weighted_random_state_coverage_100";
         String pathWeightedStepAndStateCoverage = "ReviewPerformanceTestCases\\weighted_random_step_and_state_coverage_100";
 
-        String path = pathWeightedStateCoverage;
+        String balancingAlgoReachedStep = "ReviewPerformanceTestCases\\balancing_algorithm_reached_step_save_with_invalid_rating";
+        String balancingAlgoStepCoverage = "ReviewPerformanceTestCases\\balancing_algorithm_step_coverage_100";
+        String balancingAlgoStateCoverage = "ReviewPerformanceTestCases\\balancing_algorithm_state_coverage_100";
+
+        String path = balancingAlgoStateCoverage;
 
         // create new folder in the given location with the given folder name
         utils.createNewTestOutputDirectory(path);
@@ -560,7 +565,8 @@ public class ReviewPerformanceModel {
             tester.addModelObject(new ReviewPerformanceModel());
             tester.setSuiteEndCondition(new Length(1));
             //tester.setAlgorithm(new RandomAlgorithm());
-            tester.setAlgorithm(new WeightedRandomAlgorithm());
+            //tester.setAlgorithm(new WeightedRandomAlgorithm());
+            tester.setAlgorithm(new BalancingAlgorithm());
 
             // reached step
             //tester.setTestEndCondition(new StepCoverage("save_with_invalid_rating_from_evaluate_review_page"));

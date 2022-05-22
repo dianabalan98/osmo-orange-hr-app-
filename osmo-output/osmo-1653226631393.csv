@@ -1,0 +1,24 @@
+cumulative coverage per test
+676; 723; 721; 1061; 
+gained coverage per test
+676; 47; -2; 340; 
+number of tests in suite
+4
+total score
+1061
+number of steps
+11; 12; 12; 17; 
+number of step pairs
+14; 15; 15; 23; 
+number of values
+2; 2; 2; 2; 
+number of states:
+0; 0; 0; 0; 
+number of state pairs:
+0; 0; 0; 0; 
+number of requirements
+4; 4; 4; 5; 
+length
+16; 19; 21; 31; 
+summary
+

@@ -1,0 +1,130 @@
+---------------------------------------------------
+Starting test: 1
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Fill nonexistent employee name.
+STEP: Fill valid employee name.
+STEP: Fill empty date fields.
+STEP: Fill empty supervisor.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Fill empty employee name.
+STEP: Go back to manage reviews page from form step 2.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+STEP: Activate with valid data from edit review page.
+STEP: Evaluate review.
+STEP: Go back to activated review state.
+STEP: Evaluate review.
+STEP: Save with invalid rating from evaluate review page.
+STEP: Complete with invalid completed date from evaluate review page.
+STEP: Complete with invalid final rating from evaluate review page.
+STEP: Complete review with valid data from evaluate review page.
+STEP: Cancel complete review popup from evaluate review page.
+STEP: Save with valid data from evaluate review page.
+STEP: Complete review with empty finalization fields from in progress review.
+STEP: Complete review with invalid final rating from in progress review.
+STEP: Complete review with invalid rating from in progress review.
+STEP: Complete review with valid data from in progress review.
+STEP: Cancel complete review popup from in progress review.
+---------------------------------------------------
+Starting test: 2
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from form step 2.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Fill nonexistent employee name.
+STEP: Fill nonexistent employee name.
+STEP: Fill empty employee name.
+STEP: Fill nonexistent employee name.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from form step 2.
+STEP: Go to add review page.
+STEP: Fill empty employee name.
+STEP: Fill valid employee name.
+---------------------------------------------------
+Starting test: 3
+STEP: Go to manage review page.
+STEP: Go to add review page.
+---------------------------------------------------
+Starting test: 4
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Fill empty employee name.
+STEP: Fill empty employee name.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from form step 2.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+STEP: Fill due date less than start date.
+---------------------------------------------------
+Starting test: 5
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+STEP: Save with valid data.
+STEP: Go to edit review page.
+STEP: Edit end date less than start date.
+---------------------------------------------------
+Starting test: 6
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from form step 2.
+---------------------------------------------------
+Starting test: 7
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+---------------------------------------------------
+Starting test: 8
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from form step 2.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Fill nonexistent employee name.
+STEP: Go back to manage reviews page from form step 2.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+STEP: Fill end date less than start date.
+STEP: Fill duplicate review data.
+STEP: Activate with valid data from form step 2.
+STEP: Evaluate review.
+STEP: Complete with empty finalization fields from evaluate review page.
+STEP: Complete with empty finalization fields from evaluate review page.
+STEP: Complete with invalid completed date from evaluate review page.
+STEP: Complete with invalid completed date from evaluate review page.
+STEP: Complete review with valid data from evaluate review page.
+STEP: Confirm review completion.
+STEP: Return to manage reviews page.
+STEP: Go to add review page.
+STEP: Fill nonexistent employee name.
+STEP: Fill empty employee name.
+generated 8 tests.
+
+Covered elements:
+Total steps: 99
+Unique steps: 33 (of 40) missing:[complete_with_invalid_completed_date_from_in_progress_review, edit_due_date_less_than_start_date, edit_duplicate_review_data, edit_empty_date_fields, fill_invalid_supervisor, go_back_to_inactive_review_state, save_edited_review_with_valid_data]
+Unique step-pairs: 53
+Unique requirements: 11
+Variable values: 1
+Unique coverage-values: 0
+Unique coverage-value-pairs: 0
+
+Requirements:[Activated review reached, Add review page reached, Approved review reached, Complete review pop-up reached, Dashboard page reached, Edit review page reached, Evaluate review page reached, Form step 2 reached, In progress review reached, Inactive review reached, Manage reviews page reached]
+Covered:[Activated review reached, Add review page reached, Approved review reached, Complete review pop-up reached, Dashboard page reached, Edit review page reached, Evaluate review page reached, Form step 2 reached, In progress review reached, Inactive review reached, Manage reviews page reached]
+Not covered:[]
+Total unique requirements = 11/11 (100%) requirements.

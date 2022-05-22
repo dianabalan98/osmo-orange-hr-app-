@@ -1,0 +1,37 @@
+---------------------------------------------------
+Starting test: 1
+STEP: Go to manage review page.
+STEP: Go to add review page.
+STEP: Fill valid employee name.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Fill nonexistent employee name.
+STEP: Fill empty employee name.
+STEP: Go back to manage reviews page from form step 2.
+STEP: Go to add review page.
+STEP: Go back to manage reviews page from add review page.
+STEP: Go to add review page.
+STEP: Fill empty employee name.
+STEP: Fill valid employee name.
+STEP: Fill end date less than start date.
+STEP: Fill invalid supervisor.
+STEP: Fill due date less than start date.
+STEP: Fill duplicate review data.
+STEP: Activate with valid data from form step 2.
+STEP: Evaluate review.
+STEP: Save with invalid rating from evaluate review page.
+generated 1 tests.
+
+Covered elements:
+Total steps: 20
+Unique steps: 14 (of 40) missing:[activate_with_valid_data_from_edit_review_page, cancel_complete_review_popup_from_evaluate_review_page, cancel_complete_review_popup_from_in_progress_review, complete_with_empty_finalization_fields_from_in_progress_review, complete_with_invalid_completed_date_from_in_progress_review, complete_with_invalid_final_rating_from_in_progress_review, complete_with_invalid_rating_from_in_progress_review, complete_review_with_valid_data_from_evaluate_review_page, complete_review_with_valid_data_from_in_progress_review, complete_with_empty_finalization_fields_from_evaluate_review_page, complete_with_invalid_completed_date_from_evaluate_review_page, complete_with_invalid_final_rating_from_evaluate_review_page, confirm_review_completion, edit_due_date_less_than_start_date, edit_duplicate_review_data, edit_empty_date_fields, edit_end_date_less_than_start_date, fill_empty_date_fields, fill_empty_supervisor, go_back_to_activated_review_state, go_back_to_inactive_review_state, go_to_edit_review_page, return_to_manage_reviews_page, save_edited_review_with_valid_data, save_with_valid_data, save_with_valid_data_from_evaluate_review_page]
+Unique step-pairs: 19
+Unique requirements: 6
+Variable values: 1
+Unique coverage-values: 0
+Unique coverage-value-pairs: 0
+
+Requirements:[Activated review reached, Add review page reached, Approved review reached, Complete review pop-up reached, Dashboard page reached, Edit review page reached, Evaluate review page reached, Form step 2 reached, In progress review reached, Inactive review reached, Manage reviews page reached]
+Covered:[Activated review reached, Add review page reached, Dashboard page reached, Evaluate review page reached, Form step 2 reached, Manage reviews page reached]
+Not covered:[Approved review reached, Complete review pop-up reached, Edit review page reached, In progress review reached, Inactive review reached]
+Total unique requirements = 6/11 (54.545%) requirements.

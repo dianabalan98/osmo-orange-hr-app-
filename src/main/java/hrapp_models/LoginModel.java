@@ -1,6 +1,7 @@
 package hrapp_models;
 import osmo.tester.OSMOTester;
 import osmo.tester.annotation.*;
+import osmo.tester.generator.algorithm.BalancingAlgorithm;
 import osmo.tester.generator.algorithm.RandomAlgorithm;
 import osmo.tester.generator.algorithm.WeightedRandomAlgorithm;
 import osmo.tester.generator.endcondition.Length;
@@ -188,7 +189,11 @@ public class LoginModel {
         String pathWeightedStateCoverage = "LoginTestCases\\weighted_random_state_coverage_100";
         String pathWeightedStepAndStateCoverage = "LoginTestCases\\weighted_random_step_and_state_coverage_100";
 
-        String path = pathWeightedReachedStep;
+        String balancingAlgoReachedStep = "LoginTestCases\\balancing_algorithm_reached_step_logout";
+        String balancingAlgoStepCoverage = "LoginTestCases\\balancing_algorithm_step_coverage_100";
+        String balancingAlgoStateCoverage = "LoginTestCases\\balancing_algorithm_state_coverage_100";
+
+        String path = balancingAlgoStateCoverage;
 
         // create new folder in the given location with the given folder name
         utils.createNewTestOutputDirectory(path);
@@ -200,10 +205,11 @@ public class LoginModel {
             tester.addModelObject(new LoginModel());
             tester.setSuiteEndCondition(new Length(1));
             //tester.setAlgorithm(new RandomAlgorithm());
-            tester.setAlgorithm(new WeightedRandomAlgorithm());
+            //tester.setAlgorithm(new WeightedRandomAlgorithm());
+            tester.setAlgorithm(new BalancingAlgorithm());
 
             // reached step
-            tester.setTestEndCondition(new StepCoverage("logout"));
+            //tester.setTestEndCondition(new StepCoverage("logout"));
 
             //full step coverage
             /*ArrayList<String> loginExpectedSteps = utils.getLoginExpectedSteps();
@@ -214,8 +220,8 @@ public class LoginModel {
             tester.setTestEndCondition(steps);*/
 
             // full state coverage
-            /*req = new ElementCoverageRequirement(0, 0, new LoginModel().loginRequirements.getRequirements().size());
-            tester.setSuiteEndCondition(new ElementCoverage(req));*/
+            req = new ElementCoverageRequirement(0, 0, new LoginModel().loginRequirements.getRequirements().size());
+            tester.setSuiteEndCondition(new ElementCoverage(req));
 
 
             utils.generateAndSaveOsmoOutput2(i, tester, path);
